@@ -23,9 +23,9 @@ export async function POST(request: Request) {
       status: 200,
     });
   } catch (error) {
-    const { message } = error as AuthApiError;
+    const { message, status } = error as AuthApiError;
     return new Response(JSON.stringify({ message }), {
-      status: 400,
+      status: status || 500,
     });
   }
 }
