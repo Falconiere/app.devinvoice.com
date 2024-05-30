@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "supabase:start": "npx supabase start"
+    "supabase:start": "npx supabase start",
+    "migration:generate": "drizzle-kit generate",
+    "migration:run": " drizzle-kit migrate",
+    "migration:drop": "drizzle-kit drop"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
@@ -16,8 +19,12 @@
     "@supabase/supabase-js": "^2.43.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.21.4",
+    "drizzle-orm": "^0.30.10",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
+    "postgres": "^3.4.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
