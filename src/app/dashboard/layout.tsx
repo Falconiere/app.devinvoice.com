@@ -1,4 +1,5 @@
 //src/app/dashboard/layout.tsx
+import { Button } from "@/components/ui/button";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -7,7 +8,12 @@ type DashboardLayoutProps = {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="grid grid-cols-[250px,1fr] min-h-screen w-full">
-      <aside className="bg-gray-800 text-white p-4">Sidebar</aside>
+      <aside className="bg-gray-800 text-white p-4">
+        Sidebar
+        <form action="/api/auth/logout" method="post">
+          <Button variant="secondary">Logout</Button>
+        </form>
+      </aside>
       <div className="grid grid-rows-[60px,1fr] grid-cols-1">
         <header className="p-4">
           <h1 className="text-2xl font-semibold">Header</h1>
