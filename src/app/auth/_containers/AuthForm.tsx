@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { AuthFormFooter } from "../_components/AuthFormFooter";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { AuthApiError } from "@supabase/supabase-js";
 
 type AuthFormProps = {
   type: "login" | "sign-up" | "forgot-password";
@@ -19,16 +22,41 @@ const AuthForm = ({ type }: AuthFormProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<AuthData>();
+  const [apiError, setApiError] = useState<string | null>(null);
+  const router = useRouter();
+  const onSubmit = async (data: AuthData) => {
+    try {
+      setApiError(null);
+      const response = await fetch(`/api/auth/${type}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-  const onSubmit = (data: AuthData) => {
-    console.log(data);
+      const body = await response.json();
+      if (!response.ok) {
+        throw new Error(body.message);
+      }
+      router.replace("/dashboard");
+    } catch (error) {
+      const { message } = error as AuthApiError;
+      setApiError(message || "An error occurred");
+    }
   };
-
   return (
     <form
       className="grid w-full gap-4 bg-white p-8 shadow-sm"
       onSubmit={handleSubmit(onSubmit)}
+      action={`/api/auth/${type}`}
+      method="post"
     >
+      {apiError && (
+        <div className="rounded-md bg-red-100 p-2 text-center text-red-500">
+          {apiError}
+        </div>
+      )}
       <div className="grid gap-4">
         <Input
           label="Email"
