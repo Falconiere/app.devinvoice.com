@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AuthFormProps } from "../_containers/AuthForm";
+import type { AuthFormProps } from "../_containers/AuthForm";
 
 const AuthFormFooter = ({ type }: { type: AuthFormProps["type"] }) => (
   <>
