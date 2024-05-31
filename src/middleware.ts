@@ -1,8 +1,11 @@
+
+import { ROUTES } from "@/app/routes";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PRIVATE_URLS = ["/dashboard"];
-const AUTH_URLS = ["/auth/login", "/auth/sign-up"];
+
+const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route.path);
+const AUTH = Object.values(ROUTES.AUTH).map((route) => route.path);
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -15,11 +18,11 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (PRIVATE_URLS.includes(pathname) && !user) {
-    return Response.redirect(new URL("/auth/login", req.url));
+  if (PRIVATE.includes(pathname as never) && !user) {
+    return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
   }
-  if (AUTH_URLS.includes(pathname) && user) {
-    return Response.redirect(new URL("/dashboard", req.url));
+  if (AUTH.includes(pathname as never) && user) {
+    return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.url));
   }
   return res;
 }
