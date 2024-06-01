@@ -10,6 +10,7 @@ export const updateUserSchema = createInsertSchema(userProfile,{
   email: z.string().email({ message: "Invalid email"}),
   firstName: z.string().min(3,{ message: "First name must be at least 3 characters" }),
   lastName: z.string().min(3, { message: "Last name must be at least 3 characters" }),
+  phone: z.string().min(10, { message: "Phone number must be at least 10 characters" }),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });

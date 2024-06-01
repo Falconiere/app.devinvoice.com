@@ -8,6 +8,34 @@
       "when": 1717098596907,
       "tag": "0000_vengeful_skrulls",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1717210840920,
+      "tag": "0001_stormy_lethal_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1717211366191,
+      "tag": "0002_dizzy_ser_duncan",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1717211477158,
+      "tag": "0003_certain_matthew_murdock",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1717212083084,
+      "tag": "0004_orange_strong_guy",
+      "breakpoints": true
     }
   ]
 }

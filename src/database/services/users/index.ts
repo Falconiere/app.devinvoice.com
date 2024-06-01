@@ -19,6 +19,8 @@ export const updateUserProfile = async (id:string, payload: UpdateUserProfile):P
       id: userProfile.id,
       email: userProfile.email,
       firstName: userProfile.firstName,
+      phone: userProfile.phone,
+      country: userProfile.country,
       lastName: userProfile.lastName,
       createdAt: userProfile.createdAt,
       updatedAt: userProfile.updatedAt,
