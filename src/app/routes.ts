@@ -3,7 +3,27 @@ const ROUTES = {
     DASHBOARD: {
       path: "/dashboard",
       title: "Dashboard",
-      header: "Welcome to the Dashboard",
+      header: "Welcome to <DevInVoice />",
+    },
+    INVOICES:{
+      path: "/invoices",
+      title: "Invoices",
+      header: "Invoices"
+    },
+    INVOICES_ADD:{
+      path: "/invoices/new",
+      title: "Invoices",
+      header: "Invoices"
+    },
+    INVOICES_EDIT:{
+      path: "/invoices/edi/$id",
+      title: "Invoices",
+      header: "Invoices"
+    },
+    CLIENTS:{
+      path: "/clients",
+      title: "Clients",
+      header: "Clients"
     },
     SETTINGS: {
       path: "/settings",

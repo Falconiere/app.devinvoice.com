@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/app/(main)/_utils/getCurrentUser";
+import { getCurrentUser } from "@/app/_utils/getCurrentUser";
 import type { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 

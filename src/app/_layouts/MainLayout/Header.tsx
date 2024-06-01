@@ -1,5 +1,5 @@
 "use client";
-import { SIDEBAR_LINKS } from "@/app/(main)/_utils/SideBarLinks";
+import { SIDEBAR_LINKS } from "@/app/_utils/SideBarLinks";
 import { usePathname } from "next/navigation";
 const getTitle = (path: string) => {
   const route = SIDEBAR_LINKS.find((route) => route.path === path);

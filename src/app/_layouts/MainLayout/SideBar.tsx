@@ -1,5 +1,5 @@
-import { AnimatedLogo } from "@/app/(main)/_components/AnimatedLogo";
-import { SIDEBAR_LINKS } from "@/app/(main)/_utils/SideBarLinks";
+import { AnimatedLogo } from "@/app/_components/AnimatedLogo";
+import { SIDEBAR_LINKS } from "@/app/_utils/SideBarLinks";
 import { LogOutIcon } from "lucide-react";
 import Link from "next/link";
 

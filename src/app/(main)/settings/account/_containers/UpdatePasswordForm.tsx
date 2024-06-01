@@ -1,4 +1,4 @@
-import { ContentBox } from "@/app/(main)/_components/ContentBox";
+import { ContentBox } from "@/app/_components/ContentBox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 

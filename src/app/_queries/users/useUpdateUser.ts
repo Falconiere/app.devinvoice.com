@@ -1,5 +1,7 @@
-import { apiRoute } from "@/app/api/apiRoute";
-import { http } from "@/app/api/http";
+
+
+import { apiRoute } from "@/app/_utils/apiRoute";
+import { http } from "@/app/_utils/http";
 import type { UpdateUserProfile } from "@/database/services/users/types";
 import { useMutation } from "@tanstack/react-query";
 

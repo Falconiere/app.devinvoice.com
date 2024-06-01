@@ -1,22 +1,24 @@
 "use client";
-import { ContentBox } from "@/app/(main)/_components/ContentBox";
+import { ContentBox } from "@/app/_components/ContentBox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateUser } from "@/app/(main)/_queries/users/useUpdateUser";
-import { useAccountProfile } from "@/app/(main)/_queries/users/useAccountProfile";
+import { useUpdateUser } from "@/app/_queries/users/useUpdateUser";
+import { useToast } from "@/components/ui/use-toast";
 import {
-  type UpdateUserProfile,
   updateUserSchema,
+  type UpdateUserProfile,
 } from "@/database/services/users/types";
-import { useEffect } from "react";
 
-const AccountDetailsForm = () => {
-  const { data: currentUser, isLoading } = useAccountProfile();
-  const { mutateAsync, isPending } = useUpdateUser(currentUser?.id ?? "");
+const AccountDetailsForm = ({
+  currentUser,
+}: {
+  currentUser: UpdateUserProfile;
+}) => {
+  const { toast } = useToast();
+  const { mutateAsync, isPending } = useUpdateUser(currentUser.id);
   const {
-    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -29,21 +31,22 @@ const AccountDetailsForm = () => {
     },
   });
 
-  useEffect(() => {
-    if (!isLoading && currentUser) {
-      setValue("firstName", currentUser.firstName);
-      setValue("lastName", currentUser.lastName);
-      setValue("email", currentUser.email);
-    }
-  }, [currentUser, setValue, isLoading]);
-
   const onSubmit = handleSubmit(async (data: UpdateUserProfile) => {
     await mutateAsync(data);
+    toast({
+      title: "Success!",
+      description: "Account details have been updated successfully.",
+      variant: "default",
+      duration: 2000,
+    });
   });
 
   return (
-    <ContentBox title="Account details" isLoading={isPending || isLoading}>
-      <form className="grid grid-cols-2 gap-4" onSubmit={onSubmit}>
+    <ContentBox title="Account details" isLoading={isPending}>
+      <form
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        onSubmit={onSubmit}
+      >
         <Input
           label="First name"
           {...register("firstName")}
@@ -59,8 +62,8 @@ const AccountDetailsForm = () => {
           {...register("email")}
           error={errors?.email?.message}
         />
-        <div className="col-span-2 grid justify-end">
-          <Button type="submit" disabled={isPending || isLoading}>
+        <div className="sm:col-span-2 grid justify-end">
+          <Button type="submit" disabled={isPending}>
             Save
           </Button>
         </div>

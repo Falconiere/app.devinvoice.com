@@ -1,10 +1,8 @@
 "use client"
-import { getCurrentToken } from "@/app/(main)/_utils/getCurrentToken";
-
+import { getCurrentToken } from "@/app/_utils/getCurrentToken";
 const headers = {
   "Content-Type": "application/json",
 }
-
 const http = {
   get: async <T>(url: string): Promise<{
     data?: T;

@@ -6,7 +6,8 @@ import type { UpdateUserProfile, UserProfile } from "@/database/services/users/t
 
 
 export const getUser = async (id:string):Promise<UserProfile> => {
-  const profile =await db.select().from(userProfile).where(eq(userProfile.id, id));
+  const profile = await 
+    db.select().from(userProfile).where(eq(userProfile.id, id))
   return profile?.[0]
 }
 
@@ -21,6 +22,6 @@ export const updateUserProfile = async (id:string, payload: UpdateUserProfile):P
       lastName: userProfile.lastName,
       createdAt: userProfile.createdAt,
       updatedAt: userProfile.updatedAt,
-    });
+    })
   return response?.[0];
 }

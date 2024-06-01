@@ -1,6 +1,7 @@
-import { useCurrentUser } from "@/app/(main)/_hooks/useCurrentUser";
-import { apiRoute } from "@/app/api/apiRoute";
-import { http } from "@/app/api/http";
+import { useCurrentUser } from "@/app/_hooks/useCurrentUser";
+import { apiRoute } from "@/app/_utils/apiRoute";
+import { http } from "@/app/_utils/http";
+
 import type { UserProfile } from "@/database/services/users/types";
 
 import { useQuery } from "@tanstack/react-query";
