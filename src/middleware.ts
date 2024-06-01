@@ -3,7 +3,6 @@ import { ROUTES } from "@/app/routes";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse, type NextRequest } from "next/server";
 
-
 const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route.path);
 const AUTH = Object.values(ROUTES.AUTH).map((route) => route.path);
 
@@ -12,7 +11,6 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   // Create a Supabase client configured to use cookies
   const supabase = createMiddlewareClient({ req, res });
-
   // Refresh session if expired - required for Server Components
   const {
     data: { user },
@@ -24,6 +22,7 @@ export async function middleware(req: NextRequest) {
   if (AUTH.includes(pathname as never) && user) {
     return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.url));
   }
+
   return res;
 }
 

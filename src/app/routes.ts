@@ -3,18 +3,22 @@ const ROUTES = {
     DASHBOARD: {
       path: "/dashboard",
       title: "Dashboard",
+      header: "Welcome to the Dashboard",
     },
     SETTINGS: {
       path: "/settings",
       title: "Settings",
+      header: "Settings",
     },
     USER_PROFILE: {
       path: "/settings/account",
       title: "Account",
+      header: "Account Settings",
     },
     BUSINESS_SETTINGS: {
-      path: "/settings/Business",
+      path: "/settings/business",
       title: "Business Settings",
+      header: "Business Settings",
     },
   },
   AUTH: {

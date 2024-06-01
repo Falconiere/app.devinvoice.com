@@ -1,7 +1,5 @@
 import { sql } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from "zod";
 // About name convention for tables:
 // https://stackoverflow.com/questions/4702728/relational-table-naming-convention/4703155#4703155
 

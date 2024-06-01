@@ -9,11 +9,18 @@ export const getUser = async (id:string):Promise<UserProfile> => {
   const profile =await db.select().from(userProfile).where(eq(userProfile.id, id));
   return profile?.[0]
 }
-export const updateUserProfile = async (id:string, payload: UpdateUserProfile) => {
-  return await db
+
+export const updateUserProfile = async (id:string, payload: UpdateUserProfile):Promise<UserProfile> => {
+  const response = await db
     .update(userProfile).set(payload)
     .where(eq(userProfile.id, id))
     .returning({
-      updatedId: userProfile.id,
+      id: userProfile.id,
+      email: userProfile.email,
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      createdAt: userProfile.createdAt,
+      updatedAt: userProfile.updatedAt,
     });
+  return response?.[0];
 }
