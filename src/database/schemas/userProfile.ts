@@ -1,5 +1,6 @@
+import { business } from "@/database/schemas/business";
 import { countryEnum } from "@/database/schemas/country";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 // About name convention for tables:
 // https://stackoverflow.com/questions/4702728/relational-table-naming-convention/4703155#4703155
@@ -14,3 +15,9 @@ export const userProfile = pgTable("user_profile", {
   createdAt: text("createdAt").default(sql`now()`),
   updatedAt: text("updatedAt").default(sql`now()`),
 });
+
+export const userProfileRelations = relations(userProfile, ({ many }) => ({
+  businesses: many(business, {
+    relationName: "account",
+  })
+}))

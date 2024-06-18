@@ -243,4 +243,5 @@ const countries = [
   { code: 'ZM', name: 'Zambia', flag: 'https://flagcdn.com/zm.svg' },
   { code: 'ZW', name: 'Zimbabwe', flag: 'https://flagcdn.com/zw.svg' },
 ] as const;
-export {countries};
+const countryCodes = countries.map((country) => country.code)
+export {countries, countryCodes};

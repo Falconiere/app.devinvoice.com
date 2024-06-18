@@ -1,19 +1,26 @@
 import { env } from '@/app/_constants/env';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
 
+type User = {
+  sub: string;
+}
+
+type Next = (user: User, payload:never)=> void
+
 const checkToken = (req: Request) => {
   const token = req.headers.get("Authorization") ?? "";
   const user = jwt.verify(token, env.SUPABASE_JWT_SECRET) as JwtPayload;
   if(!user) {
     throw new Error("Invalid Token");
   }
+  return user as User;
 }
 
-const mutate = async (request:Request, next:(payload:never)=> void) => {
+const mutate = async (request:Request, next:Next) => {
   try {
-    checkToken(request);
+    const user = checkToken(request)
     const payload = await request.json();
-    return next(payload as never) 
+    return next(user, payload as never) 
   } catch (error) {
     return new Response(JSON.stringify({ message: "Unauthorized", error }), {
       status: 401,
@@ -24,10 +31,10 @@ const mutate = async (request:Request, next:(payload:never)=> void) => {
 const apiMiddleware = {
   patch: mutate,
   post: mutate,
-  get: async (request:Request, next:(payload:never)=> void) => {
+  get: async (request:Request, next:Next) => {
     try {
-      checkToken(request);
-      return next({} as never);
+      const user = checkToken(request)
+      return next(user, {} as never);
     } catch (error) {
       return new Response(JSON.stringify({ message: "Unauthorized", error }), {
         status: 401,

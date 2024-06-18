@@ -14,7 +14,7 @@ const getCurrentUser = async () => {
 
 const AccountDetails = () => {
   const currentUser = use(getCurrentUser());
-  return <AccountDetailsForm currentUser={currentUser} />;
+  return currentUser && <AccountDetailsForm currentUser={currentUser} />;
 };
 
 const ProfileSettingsPage = () => {

@@ -1,0 +1,1 @@
+ALTER TABLE "business" RENAME COLUMN "fistName" TO "firstName";

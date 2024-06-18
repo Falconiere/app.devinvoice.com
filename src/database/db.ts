@@ -1,5 +1,6 @@
 
 import { env } from '@/app/_constants/env';
+import { schemas } from '@/database/schemas';
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 const db = drizzle(connection,{
+  schema: schemas,
   logger: process.env.NODE_ENV === "development",
 });
 export { db }

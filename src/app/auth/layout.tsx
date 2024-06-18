@@ -6,7 +6,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     <div className="grid min-h-screen w-full grid-cols-2 bg-gray-100">
       <div className="flex items-center justify-center bg-black">
         <h1 className="text-4xl font-bold text-white">
-          Welcome to {`<DevInvoice />`}
+          Welcome to {"<DevInvoice />"}
         </h1>
       </div>
       <div className="grid p-8">

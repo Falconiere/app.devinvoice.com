@@ -36,6 +36,20 @@
       "when": 1717212083084,
       "tag": "0004_orange_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1717260175838,
+      "tag": "0005_famous_russian",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1718712600333,
+      "tag": "0006_parallel_hulk",
+      "breakpoints": true
     }
   ]
 }

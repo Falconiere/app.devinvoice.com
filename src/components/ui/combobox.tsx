@@ -22,6 +22,7 @@ type ComboboxBoxProps = {
   options: { label: string; value: string; urlImg?: string }[];
   value: string;
   label?: string;
+  error?: string;
   onChange: (value: string) => void;
 };
 export function ComboboxBox({
@@ -29,6 +30,7 @@ export function ComboboxBox({
   value,
   onChange,
   label,
+  error,
 }: Readonly<ComboboxBoxProps>) {
   const [open, setOpen] = React.useState(false);
   const getSelectedOption = (value: string) => {
@@ -108,6 +110,9 @@ export function ComboboxBox({
           </Command>
         </PopoverContent>
       </Popover>
+      {error && (
+        <p className="text-sm font-medium text-red-500 pt-1">{error}</p>
+      )}
     </div>
   );
 }

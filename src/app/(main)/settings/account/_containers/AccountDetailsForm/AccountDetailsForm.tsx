@@ -2,16 +2,11 @@
 import { ContentBox } from "@/app/_components/ContentBox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useUpdateUser } from "@/app/_queries/users/useUpdateUser";
-import { useToast } from "@/components/ui/use-toast";
-import {
-  updateUserSchema,
-  type UpdateUserProfile,
-} from "@/database/services/users/types";
+import { Controller } from "react-hook-form";
+import type { UserProfile } from "@/database/services/users/types";
 import { ComboboxBox } from "@/components/ui/combobox";
 import { countries } from "@/data/countries";
+import { useAccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm/useAccountDetailsForm";
 
 const options = countries.map((country) => ({
   label: country.name,
@@ -19,48 +14,9 @@ const options = countries.map((country) => ({
   urlImg: country.flag,
 }));
 
-const AccountDetailsForm = ({
-  currentUser,
-}: {
-  currentUser: UpdateUserProfile;
-}) => {
-  const { toast } = useToast();
-  const { mutateAsync, isPending } = useUpdateUser(currentUser.id);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm<UpdateUserProfile>({
-    resolver: zodResolver(updateUserSchema),
-    defaultValues: {
-      firstName: currentUser?.firstName,
-      lastName: currentUser?.lastName,
-      country: currentUser?.country,
-      phone: currentUser?.phone,
-      email: currentUser?.email,
-    },
-  });
-
-  const onSubmit = handleSubmit(async (data: UpdateUserProfile) => {
-    try {
-      await mutateAsync(data);
-      toast({
-        title: "Success!",
-        description: "Account details have been updated successfully.",
-        variant: "default",
-        duration: 2000,
-      });
-    } catch {
-      toast({
-        title: "Error!",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-        duration: 2000,
-      });
-    }
-  });
-
+const AccountDetailsForm = ({ currentUser }: { currentUser?: UserProfile }) => {
+  const { onSubmit, isPending, errors, register, control } =
+    useAccountDetailsForm({ currentUser });
   return (
     <ContentBox title="Account details" isLoading={isPending}>
       <form
@@ -80,6 +36,7 @@ const AccountDetailsForm = ({
         <Input
           label="Email"
           {...register("email")}
+          disabled
           error={errors?.email?.message}
         />
         <Input

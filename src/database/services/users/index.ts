@@ -5,10 +5,14 @@ import { userProfile } from "@/database/schemas/userProfile";
 import type { UpdateUserProfile, UserProfile } from "@/database/services/users/types";
 
 
-export const getUser = async (id:string):Promise<UserProfile> => {
-  const profile = await 
-    db.select().from(userProfile).where(eq(userProfile.id, id))
-  return profile?.[0]
+export const getUser = async (id:string) => {
+  const profile = await db.query.userProfile.findFirst({
+      where: eq(userProfile.id, id),
+      with: {
+        businesses: true,
+      }
+    });
+  return profile;
 }
 
 export const updateUserProfile = async (id:string, payload: UpdateUserProfile):Promise<UserProfile> => {

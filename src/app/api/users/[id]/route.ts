@@ -3,7 +3,7 @@ import { updateUserSchema } from "@/database/services/users/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const PATCH = async (req:Request, { params}: { params: { id: string } }) => apiMiddleware.patch(req,
-  async (payload)=> {
+  async (_,payload)=> {
     try {
       const isValid = updateUserSchema.parse(payload);
       if (!isValid) {
