@@ -1,20 +1,15 @@
 "use client";
+
 import { useAccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm";
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
 
 import { ComboboxBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
-import { countries } from "@/data/countries";
+import { countryInputOptions } from "@/data/countries";
 import type { UserProfile } from "@/database/services/users/types";
 
 import { Controller } from "react-hook-form";
-
-const options = countries.map((country) => ({
-  label: country.name,
-  value: country.code,
-  urlImg: country.flag,
-}));
 
 const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onNext } = useSignUpDialogCtx();
@@ -50,7 +45,7 @@ const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
         render={({ field }) => (
           <ComboboxBox
             label="Country"
-            options={options}
+            options={countryInputOptions}
             value={field.value}
             error={errors?.country?.message}
             onChange={(value) => field.onChange(value)}

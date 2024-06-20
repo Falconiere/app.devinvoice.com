@@ -3,11 +3,19 @@ import {
   HandCoinsIcon,
   HandshakeIcon,
   LayoutDashboardIcon,
+  NewspaperIcon,
   Settings,
   UserIcon,
 } from "lucide-react";
 
 const LINKS = ROUTES.PRIVATE;
+type SideBarLink = {
+  path: string;
+  title: string;
+  header: string;
+  icon: JSX.Element;
+  subLinks?: SideBarLink[];
+};
 const SIDEBAR_LINKS = [
   {
     path: LINKS.DASHBOARD.path,
@@ -20,12 +28,28 @@ const SIDEBAR_LINKS = [
     title: LINKS.INVOICES.title,
     header: LINKS.INVOICES.header,
     icon: <HandCoinsIcon />,
+    subLinks: [
+      {
+        path: LINKS.INVOICES_ADD.path,
+        title: LINKS.INVOICES_ADD.title,
+        header: LINKS.INVOICES_ADD.header,
+        icon: <NewspaperIcon />,
+      },
+    ],
   },
   {
     path: LINKS.CLIENTS.path,
     title: LINKS.CLIENTS.title,
     header: LINKS.CLIENTS.header,
     icon: <HandshakeIcon />,
+    subLinks: [
+      {
+        path: LINKS.CLIENTS_ADD.path,
+        title: LINKS.CLIENTS_ADD.title,
+        header: LINKS.CLIENTS_ADD.header,
+        icon: <NewspaperIcon />,
+      },
+    ],
   },
   {
     path: LINKS.BUSINESS_SETTINGS.path,
@@ -39,6 +63,6 @@ const SIDEBAR_LINKS = [
     header: LINKS.USER_PROFILE.header,
     icon: <UserIcon />,
   },
-] as const;
+] as SideBarLink[];
 
 export { SIDEBAR_LINKS };

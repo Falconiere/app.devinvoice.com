@@ -1,32 +1,60 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
-import { Button } from "@/components/ui/button";
+import { ComboboxBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
-import {
-  type Business,
-  businessSchema,
-} from "@/database/services/business/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { countryInputOptions } from "@/data/countries";
+import type { Business } from "@/database/services/business/types";
+
+import { Controller, useFormContext } from "react-hook-form";
 
 const BusinessAddressForm = () => {
-  const { register } = useForm<Business>({
-    resolver: zodResolver(businessSchema),
-  });
-
+  const {
+    register,
+    control,
+    formState: { errors, isSubmitting },
+  } = useFormContext<Business>();
   return (
-    <ContentBox title="Address">
-      <form className="grid grid-cols-2 gap-4">
-        <Input label="Address Line 1" {...register("addressLine1")} />
-        <Input label="Address Line 2" {...register("addressLine2")} />
-        <Input label="City" {...register("city")} />
-        <Input label="State" {...register("state")} />
-        <Input label="Zip Code" {...register("zipCode")} />
-        <Input label="Country" {...register("country")} />
-        <div className="flex justify-end col-span-2">
-          <Button type="submit">Save</Button>
-        </div>
-      </form>
+    <ContentBox title="Address" isLoading={isSubmitting}>
+      <div className="grid grid-cols-2 gap-4">
+        <Input
+          label="Address Line 1"
+          {...register("addressLine1")}
+          error={errors?.addressLine1?.message}
+        />
+        <Input
+          label="Address Line 2"
+          {...register("addressLine2")}
+          error={errors?.addressLine2?.message}
+        />
+        <Input
+          label="City"
+          {...register("city")}
+          error={errors?.city?.message}
+        />
+        <Input
+          label="State"
+          {...register("state")}
+          error={errors?.state?.message}
+        />
+        <Input
+          label="Zip Code"
+          {...register("zipCode")}
+          error={errors?.zipCode?.message}
+        />
+        <Controller
+          control={control}
+          name="country"
+          render={({ field }) => (
+            <ComboboxBox
+              label="Country"
+              options={countryInputOptions}
+              value={field.value}
+              error={errors?.country?.message}
+              onChange={(value) => field.onChange(value)}
+            />
+          )}
+        />
+      </div>
     </ContentBox>
   );
 };

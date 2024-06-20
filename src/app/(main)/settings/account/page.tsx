@@ -1,8 +1,8 @@
-import { AccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Suspense, use } from "react";
 import { cookies } from "next/headers";
 import { getUser } from "@/database/services/users";
+import { AccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm";
 import { AccountDetailsLoader } from "@/app/(main)/settings/account/_components/AccountDetailsLoader";
 
 const getCurrentUser = async () => {

@@ -12,8 +12,8 @@ const ROUTES = {
     },
     INVOICES_ADD:{
       path: "/invoices/new",
-      title: "Invoices",
-      header: "Invoices"
+      title: "New Invoice",
+      header: "New Invoice"
     },
     INVOICES_EDIT:{
       path: "/invoices/edi/$id",
@@ -24,6 +24,11 @@ const ROUTES = {
       path: "/clients",
       title: "Clients",
       header: "Clients"
+    },
+    CLIENTS_ADD:{
+      path: "/clients/new",
+      title: "Add Client",
+      header: "Add Client"
     },
     SETTINGS: {
       path: "/settings",

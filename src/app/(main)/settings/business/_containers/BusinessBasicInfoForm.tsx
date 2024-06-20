@@ -1,34 +1,47 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  type Business,
-  businessSchema,
-} from "@/database/services/business/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import type { Business } from "@/database/services/business/types";
+import { useFormContext } from "react-hook-form";
 
 const BusinessBasicInfoForm = () => {
-  const { register } = useForm<Business>({
-    resolver: zodResolver(businessSchema),
-  });
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = useFormContext<Business>();
   return (
-    <ContentBox title="Basic Information">
-      <form className="grid gap-4">
-        <Input label="Organization Name" {...register("name")} />
+    <ContentBox title="Basic Information" isLoading={isSubmitting}>
+      <div className="grid gap-4">
+        <Input
+          label="Organization Name"
+          {...register("name")}
+          error={errors?.name?.message}
+        />
         <fieldset className="grid grid-cols-2 gap-4">
-          <Input label="First Name" {...register("fistName")} />
-          <Input label="Last Name" {...register("lastName")} />
-          <Input label="Email" {...register("email")} />
-          <Input label="Website" {...register("website")} />
+          <Input
+            label="First Name"
+            {...register("firstName")}
+            error={errors?.firstName?.message}
+          />
+          <Input
+            label="Last Name"
+            {...register("lastName")}
+            error={errors?.lastName?.message}
+          />
+          <Input
+            label="Email"
+            {...register("email")}
+            error={errors?.email?.message}
+          />
+          <Input
+            label="Website"
+            {...register("website")}
+            error={errors?.website?.message}
+          />
         </fieldset>
-        <div className="flex justify-end">
-          <Button type="submit">Save</Button>
-        </div>
-      </form>
+      </div>
     </ContentBox>
   );
 };
 
-export default BusinessBasicInfoForm;
+export { BusinessBasicInfoForm };

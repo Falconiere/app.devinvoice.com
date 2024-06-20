@@ -7,12 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-type UseAccountDetailsForm = {
+type UseAccountDetailsFormController = {
   currentUser?: UserProfile;
   onSuccess?: () => void;
   onError?: () => void;
 }
-const useAccountDetailsForm = ({ currentUser, onSuccess, onError }:UseAccountDetailsForm) => {
+const useAccountDetailsFormController = ({ currentUser, onSuccess, onError }:UseAccountDetailsFormController) => {
   const { toast } = useToast();
   
   const { data: profile } = useAccountProfile({ initialData: currentUser});
@@ -37,14 +37,14 @@ const useAccountDetailsForm = ({ currentUser, onSuccess, onError }:UseAccountDet
 
   
   useEffect(() => {
-    if(profile && !currentUser){
+    if(profile){
       setValue("firstName", profile.firstName)
       setValue("lastName", profile.lastName)
       setValue("country", profile.country)
       setValue("phone", profile.phone)
       setValue("email", profile.email)
     }
-  }, [currentUser,profile,setValue ]);
+  }, [profile,setValue]);
 
   const onSubmit = handleSubmit(async (data: UpdateUserProfile) => {
     try {
@@ -76,4 +76,4 @@ const useAccountDetailsForm = ({ currentUser, onSuccess, onError }:UseAccountDet
   }
 }
 
-export { useAccountDetailsForm }
+export { useAccountDetailsFormController }

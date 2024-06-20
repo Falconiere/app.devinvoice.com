@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 import type { UserProfile } from "@/database/services/users/types";
 import { ComboboxBox } from "@/components/ui/combobox";
 import { countries } from "@/data/countries";
-import { useAccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm/useAccountDetailsForm";
+import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
 
 const options = countries.map((country) => ({
   label: country.name,
@@ -16,7 +16,7 @@ const options = countries.map((country) => ({
 
 const AccountDetailsForm = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onSubmit, isPending, errors, register, control } =
-    useAccountDetailsForm({ currentUser });
+    useAccountDetailsFormController({ currentUser });
   return (
     <ContentBox title="Account details" isLoading={isPending}>
       <form

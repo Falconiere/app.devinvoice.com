@@ -244,4 +244,10 @@ const countries = [
   { code: 'ZW', name: 'Zimbabwe', flag: 'https://flagcdn.com/zw.svg' },
 ] as const;
 const countryCodes = countries.map((country) => country.code)
-export {countries, countryCodes};
+const countryInputOptions = countries.map((country) => ({
+  label: country.name,
+  value: country.code,
+  urlImg: country.flag,
+}));
+
+export { countries, countryCodes, countryInputOptions };

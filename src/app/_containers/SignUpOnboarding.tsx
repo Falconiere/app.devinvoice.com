@@ -1,4 +1,4 @@
-import { checkProfile } from "@/app/(main)/actions";
+import { checkProfile } from "@/app/(main)/settings/actions";
 import { SignUpDialog } from "@/app/auth/_components/SignUpDialog";
 import { SignUpDialogProvider } from "@/app/auth/_providers/SignUpDialogProvider";
 import { use } from "react";

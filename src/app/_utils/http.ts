@@ -17,6 +17,7 @@ const throwErrorMessage = async (response:Response) => {
   error = { ...error, ...responseError };
   throw (error);
 }
+
 const http = {
   get: async <T>(url: string): Promise<{
     data?: T;
