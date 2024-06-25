@@ -26,6 +26,7 @@ export default function RootLayout({
           "bg-background h-screen font-sans antialiased overflow-hidden",
           fontSans.variable
         )}
+        suppressHydrationWarning={true}
       >
         {children}
         <Toaster />

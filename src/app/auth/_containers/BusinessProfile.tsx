@@ -1,22 +1,11 @@
-import { useBusinessForm } from "@/app/(main)/settings/business/_controllers/useBusinessFormController";
-import { useSaveBusiness } from "@/app/_queries/businesses/useSaveBusiness";
-import { useAccountProfile } from "@/app/_queries/users/useAccountProfile";
+import { useBusinessFormController } from "@/app/(main)/settings/business/_controllers/useBusinessFormController";
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import {
-  type Business,
-  businessSchema,
-} from "@/database/services/business/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
 const BusinessProfile = () => {
   const { onBack } = useSignUpDialogCtx();
-  const { onSubmit, register, errors, isPending } = useBusinessForm();
+  const { onSubmit, register, errors, isPending } = useBusinessFormController();
 
   return (
     <form className="grid gap-4" onSubmit={onSubmit}>

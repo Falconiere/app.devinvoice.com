@@ -1,15 +1,15 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
 import { InputController } from "@/app/_components/forms";
-import type { Business } from "@/database/services/business/types";
+import type { Client } from "@/database/services/client/types";
 
 import { useFormContext } from "react-hook-form";
 
-const BusinessAdditionalInfoForm = () => {
+const ClientAdditionalInfoForm = () => {
   const {
     control,
     formState: { isSubmitting },
-  } = useFormContext<Business>();
+  } = useFormContext<Client>();
 
   return (
     <ContentBox title="Additional Information" isLoading={isSubmitting}>
@@ -20,4 +20,4 @@ const BusinessAdditionalInfoForm = () => {
     </ContentBox>
   );
 };
-export { BusinessAdditionalInfoForm };
+export { ClientAdditionalInfoForm };

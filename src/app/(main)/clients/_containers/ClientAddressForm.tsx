@@ -1,17 +1,16 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
 import { ComboBoxController, InputController } from "@/app/_components/forms";
-
 import { countryInputOptions } from "@/data/currencies";
-import type { Business } from "@/database/services/business/types";
+import type { Client } from "@/database/services/client/types";
 
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-const BusinessAddressForm = () => {
+const ClientAddressForm = () => {
   const {
     control,
     formState: { isSubmitting },
-  } = useFormContext<Business>();
+  } = useFormContext<Client>();
   return (
     <ContentBox title="Address" isLoading={isSubmitting}>
       <div className="grid grid-cols-2 gap-4">
@@ -39,4 +38,4 @@ const BusinessAddressForm = () => {
   );
 };
 
-export { BusinessAddressForm };
+export { ClientAddressForm };

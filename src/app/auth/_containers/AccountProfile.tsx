@@ -1,12 +1,10 @@
 "use client";
-
-import { useAccountDetailsForm } from "@/app/(main)/settings/account/_containers/AccountDetailsForm";
+import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
-
 import { ComboboxBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
-import { countryInputOptions } from "@/data/countries";
+import { countryInputOptions } from "@/data/currencies";
 import type { UserProfile } from "@/database/services/users/types";
 
 import { Controller } from "react-hook-form";
@@ -14,7 +12,7 @@ import { Controller } from "react-hook-form";
 const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onNext } = useSignUpDialogCtx();
   const { onSubmit, isPending, errors, register, control } =
-    useAccountDetailsForm({ currentUser, onSuccess: onNext });
+    useAccountDetailsFormController({ currentUser, onSuccess: onNext });
 
   return (
     <form className="grid grid-cols-1 gap-4" onSubmit={onSubmit}>

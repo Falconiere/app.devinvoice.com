@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { FormProvider } from "react-hook-form";
 
 const BusinessPage = () => {
-  const { form, onSubmit, errors } = useBusinessFormController();
+  const { form, onSubmit } = useBusinessFormController();
   return (
     <FormProvider {...form}>
       <form className="grid gap-4" onSubmit={onSubmit}>

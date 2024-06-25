@@ -1,62 +1,47 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Controller } from "react-hook-form";
 import type { UserProfile } from "@/database/services/users/types";
-import { ComboboxBox } from "@/components/ui/combobox";
-import { countries } from "@/data/countries";
+import { countryInputOptions } from "@/data/currencies";
 import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
+import { ComboBoxController, InputController } from "@/app/_components/forms";
 
-const options = countries.map((country) => ({
-  label: country.name,
-  value: country.code,
-  urlImg: country.flag,
-}));
-
-const AccountDetailsForm = ({ currentUser }: { currentUser?: UserProfile }) => {
-  const { onSubmit, isPending, errors, register, control } =
-    useAccountDetailsFormController({ currentUser });
+const AccountDetailsForm: React.FC<{ currentUser?: UserProfile }> = ({
+  currentUser,
+}) => {
+  const { onSubmit, isPending, control } = useAccountDetailsFormController({
+    currentUser,
+  });
   return (
     <ContentBox title="Account details" isLoading={isPending}>
       <form
         className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         onSubmit={onSubmit}
       >
-        <Input
+        <InputController
+          control={control}
+          name="firstName"
           label="First name"
-          {...register("firstName")}
-          error={errors?.firstName?.message}
         />
-        <Input
-          label="Last name"
-          {...register("lastName")}
-          error={errors?.lastName?.message}
-        />
-        <Input
+        <InputController control={control} name="lastName" label="Last name" />
+        <InputController
+          control={control}
+          name="email"
           label="Email"
-          {...register("email")}
           disabled
-          error={errors?.email?.message}
         />
-        <Input
+        <InputController
+          control={control}
+          name="phone"
           label="Phone"
-          {...register("phone")}
-          error={errors?.phone?.message}
+          disabled
         />
-        <Controller
+        <ComboBoxController
           control={control}
           name="country"
-          render={({ field }) => (
-            <ComboboxBox
-              label="Country"
-              options={options}
-              value={field.value}
-              onChange={(value) => field.onChange(value)}
-            />
-          )}
+          label="Country"
+          options={countryInputOptions}
         />
-
         <div className="sm:col-span-2 grid justify-end">
           <Button type="submit" disabled={isPending}>
             Save

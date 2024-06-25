@@ -1,4 +1,5 @@
-import { countries } from '@/data/countries';
+
+import { countryCodes } from '@/data/currencies';
 import { pgEnum } from 'drizzle-orm/pg-core';
-const countriesCodes = countries.map((country) => country.code)
-export const countryEnum = pgEnum("countries", countriesCodes as [string, string]);
+
+export const countryEnum = pgEnum("countries", countryCodes as [string, string]);

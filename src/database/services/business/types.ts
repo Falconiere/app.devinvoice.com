@@ -1,5 +1,6 @@
 
-import { countryCodes } from "@/data/countries";
+
+import { countryCodes } from "@/data/currencies";
 import { business } from "@/database/schemas/business";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";

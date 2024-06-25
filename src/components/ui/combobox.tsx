@@ -18,8 +18,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-type ComboboxBoxProps = {
-  options: { label: string; value: string; urlImg?: string }[];
+export type ComboboxBoxProps = {
+  options: { label: string; value: string }[];
   value: string;
   label?: string;
   error?: string;
@@ -36,18 +36,7 @@ export function ComboboxBox({
   const getSelectedOption = (value: string) => {
     const option = options?.find((option) => option.value === value);
     if (option) {
-      return (
-        <>
-          {option?.urlImg && (
-            <img
-              src={option.urlImg}
-              alt={option.label}
-              className="w-4 h-auto"
-            />
-          )}
-          {option.label}
-        </>
-      );
+      return <>{option.label}</>;
     }
     return "Select...";
   };
@@ -64,7 +53,12 @@ export function ComboboxBox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full flex items-center justify-between overflow-hidden"
+            className={cn(
+              "w-full flex items-center justify-between overflow-hidden",
+              {
+                "border-red-500": !!error,
+              }
+            )}
             type="button"
           >
             <span className="flex items-center gap-2 text-ellipsis flex-1 overflow-hidden">
@@ -90,13 +84,6 @@ export function ComboboxBox({
                     }}
                     className="flex items-center w-full gap-2 cursor-pointer"
                   >
-                    {option?.urlImg && (
-                      <img
-                        src={option.urlImg}
-                        alt={option.label}
-                        className="w-4 h-auto"
-                      />
-                    )}
                     {option.label}
                     <Check
                       className={cn(
