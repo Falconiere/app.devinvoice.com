@@ -50,6 +50,20 @@
       "when": 1718712600333,
       "tag": "0006_parallel_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1719367511765,
+      "tag": "0007_dry_morlocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1719371991838,
+      "tag": "0008_melodic_risque",
+      "breakpoints": true
     }
   ]
 }

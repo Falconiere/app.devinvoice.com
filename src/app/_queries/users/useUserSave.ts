@@ -4,9 +4,9 @@ import type { UpdateUserProfile } from "@/database/services/user/types";
 
 import { useMutation } from "@tanstack/react-query";
 
-const useSaveUser = (id: string) =>
+const useUserSave = (id: string) =>
 	useMutation({
 		mutationFn: (data: UpdateUserProfile) =>
 			http.patch(apiRoute.users.patch(id), data),
 	});
-export { useSaveUser };
+export { useUserSave };

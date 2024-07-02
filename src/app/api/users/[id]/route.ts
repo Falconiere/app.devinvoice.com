@@ -1,4 +1,4 @@
-import { getUser, updateUserProfile } from "@/database/services/user";
+import { getUserById, updateUserProfile } from "@/database/services/user";
 import { updateUserSchema } from "@/database/services/user/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
@@ -17,6 +17,7 @@ export const PATCH = async (
 					},
 				);
 			}
+
 			const response = await updateUserProfile(params.id, payload);
 			return new Response(
 				JSON.stringify({ message: "success", data: response }),
@@ -37,7 +38,7 @@ export const GET = async (
 ) =>
 	apiMiddleware.get(req, async () => {
 		try {
-			const response = await getUser(params.id);
+			const response = await getUserById(params.id);
 			return new Response(
 				JSON.stringify({ message: "success", data: response }),
 				{

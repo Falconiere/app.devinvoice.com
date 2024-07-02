@@ -17,14 +17,36 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
+export type ComboBoxOption = {
+  label: string;
+  value: string;
+  icon?: string;
+};
 export type ComboboxBoxProps = {
-  options: { label: string; value: string }[];
+  options: ComboBoxOption[];
   value: string;
   label?: string;
   error?: string;
   onChange: (value: string) => void;
 };
+
+const Option = (option: ComboBoxOption) => (
+  <>
+    {option?.icon && (
+      <Image
+        src={option.icon}
+        className="h-4 w-4"
+        alt={option.label}
+        width={16}
+        height={16}
+      />
+    )}
+    {option.label}
+  </>
+);
+
 export function ComboboxBox({
   options,
   value,
@@ -36,7 +58,7 @@ export function ComboboxBox({
   const getSelectedOption = (value: string) => {
     const option = options?.find((option) => option.value === value);
     if (option) {
-      return <>{option.label}</>;
+      return <Option {...option} />;
     }
     return "Select...";
   };
@@ -84,7 +106,7 @@ export function ComboboxBox({
                     }}
                     className="flex items-center w-full gap-2 cursor-pointer"
                   >
-                    {option.label}
+                    <Option {...option} />
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",

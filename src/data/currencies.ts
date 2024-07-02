@@ -841,14 +841,9 @@ const currencies = [
 	},
 ] as const;
 
-const uniqueCountryCodes = Array.from(
-	new Set(currencies.map((country) => country.code)),
-);
 const uniqueCurrencyCodes = Array.from(
 	new Set(currencies.map((country) => country.currency)),
 );
-
-const countryCodes = uniqueCountryCodes.map((code) => code);
 
 const currenciesInputOptions = uniqueCurrencyCodes
 	.map((code) => {
@@ -860,17 +855,4 @@ const currenciesInputOptions = uniqueCurrencyCodes
 	})
 	.filter((c) => c.value);
 
-const countryInputOptions = uniqueCountryCodes.map((country) => {
-	const countryData = currencies.find((c) => c.code === country);
-	return {
-		label: `${countryData?.flag} ${countryData?.country}`,
-		value: countryData?.code ?? "",
-	};
-});
-
-export {
-	currencies,
-	countryCodes,
-	currenciesInputOptions,
-	countryInputOptions,
-};
+export { currencies, currenciesInputOptions };

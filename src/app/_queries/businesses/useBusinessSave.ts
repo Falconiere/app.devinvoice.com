@@ -3,7 +3,7 @@ import { http } from "@/app/_utils/http";
 import type { Business } from "@/database/services/business/types";
 import { useMutation } from "@tanstack/react-query";
 
-const useSaveBusiness = (id?: string) => {
+const useBusinessSave = (id?: string) => {
 	return useMutation({
 		mutationFn: (data: Partial<Business>) =>
 			id
@@ -11,4 +11,4 @@ const useSaveBusiness = (id?: string) => {
 				: http.post(apiRoute.businesses.post, data),
 	});
 };
-export { useSaveBusiness };
+export { useBusinessSave };

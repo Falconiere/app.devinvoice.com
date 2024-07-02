@@ -22,7 +22,6 @@ type CurrencyControllerProps<T extends FieldValues> = Omit<
 const CurrencyController = <T extends FieldValues>({
   name,
   control,
-  label,
   ...rest
 }: CurrencyControllerProps<T>) => {
   const {

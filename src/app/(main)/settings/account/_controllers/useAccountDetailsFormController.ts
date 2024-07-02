@@ -1,6 +1,7 @@
 "use client";
-import { useAccountProfile } from "@/app/_queries/users/useAccountProfile";
-import { useSaveUser } from "@/app/_queries/users/useSaveUser";
+
+import { useUserProfile } from "@/app/_queries/users/useUserProfile";
+import { useUserSave } from "@/app/_queries/users/useUserSave";
 import { useToast } from "@/components/ui/use-toast";
 import {
 	type UpdateUserProfile,
@@ -24,9 +25,9 @@ const useAccountDetailsFormController = ({
 }: UseAccountDetailsFormController) => {
 	const { toast } = useToast();
 
-	const { data: profile } = useAccountProfile({ initialData: currentUser });
+	const { data: profile } = useUserProfile({ initialData: currentUser });
 	const userId = currentUser?.id ?? profile?.id ?? "";
-	const { mutateAsync, isPending } = useSaveUser(userId);
+	const { mutateAsync, isPending } = useUserSave(userId);
 	const { handleSubmit, control, setValue } = useForm<UserProfile>({
 		resolver: zodResolver(updateUserSchema),
 		defaultValues: {

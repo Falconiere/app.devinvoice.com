@@ -1,5 +1,5 @@
-import { useSaveBusiness } from "@/app/_queries/businesses/useSaveBusiness";
-import { useAccountProfile } from "@/app/_queries/users/useAccountProfile";
+import { useClient } from "@/app/_queries/clients/useClient";
+import { useClientSave } from "@/app/_queries/clients/useClientSave";
 
 import { useToast } from "@/components/ui/use-toast";
 
@@ -12,19 +12,23 @@ import { useForm } from "react-hook-form";
 type UseClientFormController = {
 	onSuccess?: () => void;
 	onError?: () => void;
+	client?: Client;
 };
+
 const useClientFormController = (options?: UseClientFormController) => {
-	const { onSuccess, onError } = options ?? {};
-	const { refresh } = useRouter();
-	const { data, isLoading } = useAccountProfile();
+	const { client: currentClient } = options ?? {};
+	const { replace } = useRouter();
 	const { toast } = useToast();
 
-	const business = data?.businesses?.[0];
-	const { mutateAsync, isPending } = useSaveBusiness(business?.id);
+	const { mutateAsync, isPending } = useClientSave(currentClient?.id);
 	const form = useForm<Client>({
-		defaultValues: business,
-		resolver: zodResolver(clientSchema),
+		defaultValues: currentClient,
+		resolver: zodResolver(
+			clientSchema.omit({ createdAt: true, updatedAt: true }),
+		),
 	});
+
+	const { data: client, isLoading } = useClient(currentClient?.id);
 
 	const {
 		handleSubmit,
@@ -34,24 +38,26 @@ const useClientFormController = (options?: UseClientFormController) => {
 	} = form;
 
 	useEffect(() => {
-		if (business) {
-			for (const [key, value] of Object.entries(business)) {
+		if (client) {
+			for (const [key, value] of Object.entries(client)) {
 				// Skip createdAt and updatedAt fields, will be handled by the server
 				if (key === "createdAt" || key === "updatedAt") continue;
 				setValue(key as keyof Client, value as string);
 			}
 		}
-	}, [business, setValue]);
+	}, [client, setValue]);
+
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			await mutateAsync(data);
+			const savedClient = await mutateAsync(data);
 			toast({
 				title: "Success!",
-				description: "Business details have been saved successfully.",
+				description: "Client details have been saved successfully.",
 				variant: "default",
 				duration: 2000,
 			});
-			onSuccess?.();
+
+			if (savedClient?.data?.id) replace(`/clients/${savedClient.data.id}`);
 		} catch {
 			toast({
 				title: "Error!",
@@ -59,9 +65,7 @@ const useClientFormController = (options?: UseClientFormController) => {
 				variant: "destructive",
 				duration: 2000,
 			});
-			onError?.();
 		}
-		refresh();
 	});
 
 	return {

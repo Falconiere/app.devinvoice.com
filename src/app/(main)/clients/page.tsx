@@ -1,9 +1,7 @@
+import { ClientList } from "@/app/(main)/clients/_containers/ClientList";
+
 const ClientsPage = () => {
-  return (
-    <div>
-      <h1>Clients</h1>
-    </div>
-  );
+  return <ClientList />;
 };
 
 export default ClientsPage;

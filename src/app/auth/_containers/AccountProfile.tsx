@@ -1,54 +1,29 @@
 "use client";
 import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
+import { ComboBoxController, InputController } from "@/app/_components/forms";
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
-import { ComboboxBox } from "@/components/ui/combobox";
-import { Input } from "@/components/ui/input";
-import { countryInputOptions } from "@/data/currencies";
-import type { UserProfile } from "@/database/services/users/types";
-
-import { Controller } from "react-hook-form";
+import { countryInputOptions } from "@/data/countries";
+import type { UserProfile } from "@/database/services/user/types";
 
 const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onNext } = useSignUpDialogCtx();
-  const { onSubmit, isPending, errors, register, control } =
-    useAccountDetailsFormController({ currentUser, onSuccess: onNext });
+  const { onSubmit, isPending, control } = useAccountDetailsFormController({
+    currentUser,
+    onSuccess: onNext,
+  });
 
   return (
     <form className="grid grid-cols-1 gap-4" onSubmit={onSubmit}>
-      <Input
-        label="First name"
-        {...register("firstName")}
-        error={errors?.firstName?.message}
-      />
-      <Input
-        label="Last name"
-        {...register("lastName")}
-        error={errors?.lastName?.message}
-      />
-      <Input
-        label="Email"
-        {...register("email")}
-        disabled
-        error={errors?.email?.message}
-      />
-      <Input
-        label="Phone"
-        {...register("phone")}
-        error={errors?.phone?.message}
-      />
-      <Controller
+      <InputController control={control} name="firstName" label="First name" />
+      <InputController control={control} name="lastName" label="Last name" />
+      <InputController control={control} name="email" label="Email" />
+      <InputController control={control} name="phone" label="Phone" />
+      <ComboBoxController
         control={control}
         name="country"
-        render={({ field }) => (
-          <ComboboxBox
-            label="Country"
-            options={countryInputOptions}
-            value={field.value}
-            error={errors?.country?.message}
-            onChange={(value) => field.onChange(value)}
-          />
-        )}
+        label="Country"
+        options={countryInputOptions}
       />
       <SignUpDialogFooter isSubmitting={isPending} />
     </form>

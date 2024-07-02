@@ -1,4 +1,4 @@
-import { countryCodes } from "@/data/currencies";
+import { countryCodes } from "@/data/countries";
 import { client } from "@/database/schemas/client";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -29,6 +29,6 @@ export const clientSchema = createInsertSchema(client, {
 	notes: z.string().optional(),
 	createdAt: z.date().optional(),
 	updatedAt: z.date().optional(),
-});
+}).omit({ businessId: true });
 
 export type Client = typeof client.$inferSelect;

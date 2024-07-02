@@ -1,10 +1,10 @@
 "use client";
-import { ContentBox } from "@/app/_components/ContentBox";
-import { Button } from "@/components/ui/button";
-import type { UserProfile } from "@/database/services/users/types";
-import { countryInputOptions } from "@/data/currencies";
 import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
+import { ContentBox } from "@/app/_components/ContentBox";
 import { ComboBoxController, InputController } from "@/app/_components/forms";
+import { Button } from "@/components/ui/button";
+import { countryInputOptions } from "@/data/countries";
+import type { UserProfile } from "@/database/services/user/types";
 
 const AccountDetailsForm: React.FC<{ currentUser?: UserProfile }> = ({
   currentUser,

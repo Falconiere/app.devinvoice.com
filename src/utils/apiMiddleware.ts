@@ -28,18 +28,21 @@ const mutate = async (request: Request, next: Next) => {
 	}
 };
 
+const query = async (request: Request, next: Next) => {
+	try {
+		const user = checkToken(request);
+		return next(user, {} as never);
+	} catch (error) {
+		return new Response(JSON.stringify({ message: "Unauthorized", error }), {
+			status: 401,
+		});
+	}
+};
+
 const apiMiddleware = {
 	patch: mutate,
 	post: mutate,
-	get: async (request: Request, next: Next) => {
-		try {
-			const user = checkToken(request);
-			return next(user, {} as never);
-		} catch (error) {
-			return new Response(JSON.stringify({ message: "Unauthorized", error }), {
-				status: 401,
-			});
-		}
-	},
+	get: query,
+	delete: query,
 };
 export { apiMiddleware };

@@ -1,9 +1,6 @@
 "use client";
 import { StepperBar } from "@/app/auth/_components/StepperBar";
-import {
-  SignUpDialogProvider,
-  useSignUpDialogCtx,
-} from "@/app/auth/_providers/SignUpDialogProvider";
+import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
 
 import {
   AlertDialog,

@@ -1,6 +1,5 @@
 import { business } from "@/database/schemas/business";
 import { countryEnum } from "@/database/schemas/country";
-import { userProfile } from "@/database/schemas/userProfile";
 import { relations, sql } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 
@@ -20,7 +19,7 @@ export const client = pgTable("client", {
 	phone: text("phone"),
 	notes: text("notes"),
 	businessId: uuid("businessId")
-		.references(() => userProfile.id, {
+		.references(() => business.id, {
 			onDelete: "cascade",
 		})
 		.notNull(),

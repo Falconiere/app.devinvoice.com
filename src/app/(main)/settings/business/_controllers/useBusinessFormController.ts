@@ -1,5 +1,5 @@
-import { useSaveBusiness } from "@/app/_queries/businesses/useSaveBusiness";
-import { useAccountProfile } from "@/app/_queries/users/useAccountProfile";
+import { useBusinessSave } from "@/app/_queries/businesses/useBusinessSave";
+import { useUserProfile } from "@/app/_queries/users/useUserProfile";
 
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -18,11 +18,11 @@ type UseBusinessFormController = {
 const useBusinessFormController = (options?: UseBusinessFormController) => {
 	const { onSuccess, onError } = options ?? {};
 	const { refresh } = useRouter();
-	const { data, isLoading } = useAccountProfile();
+	const { data, isLoading } = useUserProfile();
 	const { toast } = useToast();
 
 	const business = data?.businesses?.[0];
-	const { mutateAsync, isPending } = useSaveBusiness(business?.id);
+	const { mutateAsync, isPending } = useBusinessSave(business?.id);
 	const form = useForm<Business>({
 		defaultValues: business,
 		resolver: zodResolver(businessSchema),
@@ -72,6 +72,7 @@ const useBusinessFormController = (options?: UseBusinessFormController) => {
 		isPending: isLoading || isPending,
 		errors,
 		register,
+		isLoading,
 	};
 };
 

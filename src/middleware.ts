@@ -5,6 +5,18 @@ import { type NextRequest, NextResponse } from "next/server";
 const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route.path);
 const AUTH = Object.values(ROUTES.AUTH).map((route) => route.path);
 
+const checkIfPrivate = (pathname: string) => {
+	for (const route of PRIVATE) {
+		if (
+			pathname.startsWith(route) ||
+			pathname === route ||
+			route.match(pathname)
+		) {
+			return true;
+		}
+	}
+};
+
 export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
 	const pathname = req.nextUrl.pathname;
@@ -15,7 +27,7 @@ export async function middleware(req: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser();
 
-	if (PRIVATE.includes(pathname as never) && !user) {
+	if (checkIfPrivate(pathname) && !user) {
 		return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
 	}
 	if (AUTH.includes(pathname as never) && user) {

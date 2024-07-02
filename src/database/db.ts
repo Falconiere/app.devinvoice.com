@@ -20,6 +20,6 @@ if (process.env.NODE_ENV === "production") {
 
 const db = drizzle(connection, {
 	schema: schemas,
-	logger: process.env.NODE_ENV === "development",
+	// logger: process.env.NODE_ENV === "development",
 });
 export { db };

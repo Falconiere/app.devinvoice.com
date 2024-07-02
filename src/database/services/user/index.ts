@@ -7,7 +7,7 @@ import type {
 	UserProfile,
 } from "@/database/services/user/types";
 
-export const getUser = async (id: string) => {
+const getUserById = async (id: string) => {
 	const profile = await db.query.userProfile.findFirst({
 		where: eq(userProfile.id, id),
 		with: {
@@ -17,7 +17,7 @@ export const getUser = async (id: string) => {
 	return profile;
 };
 
-export const updateUserProfile = async (
+const updateUserProfile = async (
 	id: string,
 	payload: UpdateUserProfile,
 ): Promise<UserProfile> => {
@@ -37,3 +37,5 @@ export const updateUserProfile = async (
 		});
 	return response?.[0];
 };
+
+export { getUserById, updateUserProfile };

@@ -4,7 +4,7 @@ import { http } from "@/app/_utils/http";
 import type { UserProfile } from "@/database/services/user/types";
 
 import { useQuery } from "@tanstack/react-query";
-const useAccountProfile = (options?: { initialData?: UserProfile }) => {
+const useUserProfile = (options?: { initialData?: UserProfile }) => {
 	const currentUser = useCurrentUser();
 	return useQuery({
 		queryKey: ["accountProfile", currentUser?.id],
@@ -18,4 +18,4 @@ const useAccountProfile = (options?: { initialData?: UserProfile }) => {
 		enabled: !!currentUser?.id,
 	});
 };
-export { useAccountProfile };
+export { useUserProfile };

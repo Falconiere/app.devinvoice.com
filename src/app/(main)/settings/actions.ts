@@ -1,11 +1,11 @@
-import { getUser } from "@/database/services/user";
+import { getUserById } from "@/database/services/user";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 const checkProfile = async () => {
 	const supabase = createServerComponentClient({ cookies: () => cookies() });
 	const { data } = await supabase.auth.getUser();
-	const profile = await getUser(data.user?.id ?? "");
+	const profile = await getUserById(data.user?.id ?? "");
 	const hasAccount = Boolean(
 		profile?.firstName &&
 			profile?.lastName &&

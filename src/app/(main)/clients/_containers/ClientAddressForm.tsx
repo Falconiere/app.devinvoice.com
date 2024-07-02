@@ -1,7 +1,8 @@
 "use client";
 import { ContentBox } from "@/app/_components/ContentBox";
 import { ComboBoxController, InputController } from "@/app/_components/forms";
-import { countryInputOptions } from "@/data/currencies";
+import { countryInputOptions } from "@/data/countries";
+
 import type { Client } from "@/database/services/client/types";
 
 import { useFormContext } from "react-hook-form";
