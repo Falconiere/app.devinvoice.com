@@ -23,6 +23,8 @@ interface DataTableProps<TData, TValue> {
   onLoadMore?: () => void;
   isLoading?: boolean;
   hasNextPage?: boolean;
+  hideHeader?: boolean;
+  onRowSubmit?: (row: TData) => void;
 }
 
 function DataTable<TData, TValue>({
@@ -31,6 +33,8 @@ function DataTable<TData, TValue>({
   onLoadMore,
   isLoading,
   hasNextPage,
+  hideHeader,
+  onRowSubmit,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const table = useReactTable({
     data,
@@ -44,31 +48,39 @@ function DataTable<TData, TValue>({
   return (
     <div className="grid gap-4 items-center">
       <Table className="rounded-md border bg-white">
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
+        {!hideHeader && (
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+        )}
         <TableBody>
           {totalRows ? (
             rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="hover:bg-gray-50 transition-colors duration-200 ease-in-out"
+                className="hover:bg-gray-50 transition-colors duration-200 ease-in-out cursor-pointer"
+                onDoubleClick={() => {
+                  if (!row.getIsSelected()) {
+                    row.toggleSelected();
+                  }
+                  onRowSubmit?.(row.original);
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="last:text-right">

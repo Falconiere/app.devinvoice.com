@@ -1,3 +1,4 @@
+import { invoice } from "@/database/schemas/invoice";
 import { sql } from "drizzle-orm";
 import { decimal, integer, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
@@ -6,6 +7,11 @@ const invoiceItem = pgTable("invoiceItem", {
 	description: text("description"),
 	quantity: integer("quantity"),
 	price: decimal("price"),
+	invoiceId: uuid("invoiceId")
+		.references(() => invoice.id, {
+			onDelete: "cascade",
+		})
+		.notNull(),
 	createdAt: text("createdAt").default(sql`now()`),
 	updatedAt: text("updatedAt").default(sql`now()`),
 });

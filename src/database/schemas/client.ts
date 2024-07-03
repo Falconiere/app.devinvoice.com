@@ -1,5 +1,6 @@
 import { business } from "@/database/schemas/business";
 import { countryEnum } from "@/database/schemas/country";
+import { invoice } from "@/database/schemas/invoice";
 import { relations, sql } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 
@@ -27,10 +28,11 @@ export const client = pgTable("client", {
 	updatedAt: text("updatedAt").default(sql`now()`),
 });
 
-export const clientRelation = relations(client, ({ one }) => ({
+export const clientRelation = relations(client, ({ one, many }) => ({
 	business: one(business, {
 		fields: [client.businessId],
 		references: [business.id],
 		relationName: "business_from_client",
 	}),
+	invoices: many(invoice),
 }));

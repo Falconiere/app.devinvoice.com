@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import type { Business } from "@/database/services/business/types";
 export const selectUserSchema = createSelectSchema(userProfile);
+
 export type UserProfile = z.infer<typeof selectUserSchema> & {
 	businesses?: Business[];
 };

@@ -18,7 +18,12 @@ import { Edit2Icon, EllipsisIcon, Trash } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-const useClientTableController = () => {
+type UseClientTableController = {
+  hideActions?: boolean;
+};
+const useClientTableController = ({
+  hideActions,
+}: UseClientTableController) => {
   const { toast } = useToast();
   const { data, isLoading, hasNextPage, fetchNextPage, refetch } =
     useClientPaginated();
@@ -37,6 +42,7 @@ const useClientTableController = () => {
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
+          if (hideActions) return null;
           const client = row.original;
           return (
             <>
@@ -72,7 +78,7 @@ const useClientTableController = () => {
         },
       },
     ],
-    []
+    [hideActions]
   );
 
   const onDelete = async () => {

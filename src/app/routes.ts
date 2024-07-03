@@ -36,7 +36,6 @@ const ROUTES = {
 			path: "/clients/new",
 			match: (pathname: string) => pathname === ROUTES.PRIVATE.CLIENTS_ADD.path,
 			title: "New Client",
-
 			header: "New Client",
 		},
 		CLIENTS_EDIT: {

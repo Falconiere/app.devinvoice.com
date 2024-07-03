@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 // TODO: Create validation with ZOd for the variables
-const connectionString = process.env.DATABASE_URL as string;
+const connectionString = process.env.NEXT_PUBLIC_DATABASE_URL as string;
 
 import { defineConfig } from "drizzle-kit";
 export default defineConfig({

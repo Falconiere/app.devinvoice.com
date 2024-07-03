@@ -10,6 +10,14 @@ const nextConfig = {
 				source: "/clients/:id",
 				destination: "/clients/form",
 			},
+			{
+				source: "/invoices/new",
+				destination: "/invoices/form",
+			},
+			{
+				source: "/invoices/:id",
+				destination: "/invoices/form",
+			},
 		];
 	},
 };
