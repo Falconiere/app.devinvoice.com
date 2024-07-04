@@ -1,0 +1,1 @@
+ALTER TABLE "invoice" ADD COLUMN "currency" text DEFAULT 'USD';

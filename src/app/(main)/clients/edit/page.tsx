@@ -2,10 +2,10 @@ import { ClientForm } from "@/app/(main)/clients/_containers/ClientForm";
 import { getClientById } from "@/database/services/client";
 import type { Client } from "@/database/services/client/types";
 
-type AddClientProps = {
+type EditProps = {
   searchParams?: { id: string };
 };
-const AddClient = async ({ searchParams }: AddClientProps) => {
+const Edit = async ({ searchParams }: EditProps) => {
   const { id } = searchParams ?? {};
   let client: Client | undefined = undefined;
   if (id) {
@@ -13,4 +13,4 @@ const AddClient = async ({ searchParams }: AddClientProps) => {
   }
   return <ClientForm client={client} />;
 };
-export default AddClient;
+export default Edit;

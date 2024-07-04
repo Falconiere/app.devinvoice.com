@@ -13,7 +13,7 @@ type BillBasicInfoProps = {
   phone?: string | null;
   onEdit?: () => void;
   onSelect?: () => void;
-  error: string | undefined;
+  error?: string | undefined;
 };
 const BillBasicInfo = (props: BillBasicInfoProps) => {
   const {
@@ -27,6 +27,7 @@ const BillBasicInfo = (props: BillBasicInfoProps) => {
     onSelect,
     error,
   } = props;
+
   return (
     <div>
       <div className="flex items-center justify-between">

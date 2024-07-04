@@ -1,7 +1,7 @@
 import { countryEnum } from "@/database/schemas/country";
 import { userProfile } from "@/database/schemas/userProfile";
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const business = pgTable("business", {
 	id: uuid("id").default(sql`uuid_generate_v4()`).primaryKey().unique(),
@@ -23,8 +23,8 @@ export const business = pgTable("business", {
 			onDelete: "cascade",
 		})
 		.notNull(),
-	createdAt: text("createdAt").default(sql`now()`),
-	updatedAt: text("updatedAt").default(sql`now()`),
+	createdAt: timestamp("createdAt", { withTimezone: true }).default(sql`now()`),
+	updatedAt: timestamp("updatedAt", { withTimezone: true }).default(sql`now()`),
 });
 
 export const businessRelation = relations(business, ({ one }) => ({

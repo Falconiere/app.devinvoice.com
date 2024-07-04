@@ -1,10 +1,10 @@
-import { useBusinessSave } from "@/app/_queries/businesses/useBusinessSave";
-import { useUserProfile } from "@/app/_queries/users/useUserProfile";
+import { useBusinessSave } from "@/app/_queries/business/useBusinessSave";
+import { useUserProfile } from "@/app/_queries/user/useUserProfile";
 
 import { useToast } from "@/components/ui/use-toast";
 import {
 	type Business,
-	businessSchema,
+	businessZodSchema,
 } from "@/database/services/business/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ const useBusinessFormController = (options?: UseBusinessFormController) => {
 	const { mutateAsync, isPending } = useBusinessSave(business?.id);
 	const form = useForm<Business>({
 		defaultValues: business,
-		resolver: zodResolver(businessSchema),
+		resolver: zodResolver(businessZodSchema),
 	});
 
 	const {

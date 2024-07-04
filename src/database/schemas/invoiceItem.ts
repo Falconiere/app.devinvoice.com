@@ -1,6 +1,13 @@
 import { invoice } from "@/database/schemas/invoice";
-import { sql } from "drizzle-orm";
-import { decimal, integer, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import {
+	decimal,
+	integer,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+} from "drizzle-orm/pg-core";
 
 const invoiceItem = pgTable("invoiceItem", {
 	id: uuid("id").default(sql`uuid_generate_v4()`).primaryKey().unique(),
@@ -12,8 +19,16 @@ const invoiceItem = pgTable("invoiceItem", {
 			onDelete: "cascade",
 		})
 		.notNull(),
-	createdAt: text("createdAt").default(sql`now()`),
-	updatedAt: text("updatedAt").default(sql`now()`),
+	createdAt: timestamp("createdAt").default(sql`now()`),
+	updatedAt: timestamp("updatedAt").default(sql`now()`),
 });
+
+export const invoiceItemRelations = relations(invoiceItem, ({ one }) => ({
+	user: one(invoice, {
+		fields: [invoiceItem.invoiceId],
+		references: [invoice.id],
+		relationName: "invoice_items",
+	}),
+}));
 
 export { invoiceItem };

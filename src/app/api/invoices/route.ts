@@ -1,13 +1,15 @@
-import { createClient, getClientPaginated } from "@/database/services/client";
-import { clientZodSchema } from "@/database/services/client/types";
+import {
+	createInvoice,
+	getInvoicePaginated,
+} from "@/database/services/invoice";
+import { invoiceZodSchema } from "@/database/services/invoice/types";
 import { getUserById } from "@/database/services/user";
-
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const POST = async (req: Request) =>
 	apiMiddleware.post(req, async (user, payload) => {
 		try {
-			const isValid = clientZodSchema.parse(payload);
+			const isValid = invoiceZodSchema.parse(payload);
 			if (!isValid) {
 				return new Response(
 					JSON.stringify({ message: "error", error: isValid }),
@@ -16,15 +18,10 @@ export const POST = async (req: Request) =>
 					},
 				);
 			}
-			const currentActiveBusiness = await getUserById(user.sub);
-			const response = await createClient(
-				Object.assign(payload, {
-					businessId: currentActiveBusiness?.businesses[0].id,
-				}),
-			);
+			const response = await createInvoice(payload);
 
 			return new Response(
-				JSON.stringify({ message: "success", data: response[0] }),
+				JSON.stringify({ message: "success", data: response }),
 				{
 					status: 200,
 				},
@@ -55,7 +52,7 @@ export const GET = async (req: Request) =>
 				businessId: currentActiveBusiness?.businesses[0].id,
 			};
 
-			const response = await getClientPaginated(payload);
+			const response = await getInvoicePaginated(payload);
 			return new Response(
 				JSON.stringify({ message: "success", data: response }),
 				{

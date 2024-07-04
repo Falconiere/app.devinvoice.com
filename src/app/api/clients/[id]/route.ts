@@ -3,7 +3,7 @@ import {
 	getClientById,
 	updateClient,
 } from "@/database/services/client";
-import { clientSchema } from "@/database/services/client/types";
+import { clientZodSchema } from "@/database/services/client/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const GET = async (
@@ -57,7 +57,7 @@ export const PATCH = async (
 ) =>
 	apiMiddleware.post(req, async (user, payload) => {
 		try {
-			const isValid = clientSchema.parse(payload);
+			const isValid = clientZodSchema.parse(payload);
 			if (!isValid) {
 				return new Response(
 					JSON.stringify({ message: "error", error: isValid }),

@@ -26,7 +26,7 @@ const Sidebar = () => {
                     variant="default"
                     asChild
                   >
-                    <Link href={route.subLinks[0].path} prefetch>
+                    <Link href={route.subLinks[0].path}>
                       <PlusIcon size={24} />
                     </Link>
                   </Button>

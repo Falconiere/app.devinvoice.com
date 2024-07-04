@@ -3,13 +3,13 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 import type { Business } from "@/database/services/business/types";
-export const selectUserSchema = createSelectSchema(userProfile);
+export const selectUserZodSchema = createSelectSchema(userProfile);
 
-export type UserProfile = z.infer<typeof selectUserSchema> & {
+export type UserProfile = z.infer<typeof selectUserZodSchema> & {
 	businesses?: Business[];
 };
 
-export const updateUserSchema = createInsertSchema(userProfile, {
+export const updateUserZodSchema = createInsertSchema(userProfile, {
 	email: z.string().email({ message: "Invalid email" }),
 	firstName: z
 		.string()
@@ -25,4 +25,4 @@ export const updateUserSchema = createInsertSchema(userProfile, {
 	updatedAt: z.date().optional(),
 });
 
-export type UpdateUserProfile = z.infer<typeof selectUserSchema>;
+export type UpdateUserProfile = z.infer<typeof selectUserZodSchema>;

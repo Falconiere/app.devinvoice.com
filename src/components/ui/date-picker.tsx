@@ -46,6 +46,7 @@ export function DatePicker({
               !value && "text-muted-foreground",
               error && "border-red-500"
             )}
+            type="button"
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {value ? format(value, "PPP") : <span>Pick a date</span>}

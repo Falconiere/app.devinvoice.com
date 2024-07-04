@@ -10,7 +10,7 @@ const getTitle = (path: string) => {
 const Header = () => {
   const path = usePathname();
   return (
-    <header className="p-4 grid w-full mx-auto max-w-[1430px]">
+    <header className="p-4 grid w-full mx-auto max-w-[1430px] ">
       <h1 className="text-2xl font-semibold">{getTitle(path)}</h1>
     </header>
   );

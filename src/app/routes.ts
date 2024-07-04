@@ -1,3 +1,5 @@
+import { findUUIDSFromPathname } from "@/app/_utils/findUUIDFromPathname";
+
 const ROUTES = {
 	PRIVATE: {
 		DASHBOARD: {
@@ -22,7 +24,10 @@ const ROUTES = {
 		INVOICES_EDIT: {
 			path: "/invoices/$id",
 			get: (id: string) => `/invoices/${id}`,
-			match: (pathname: string) => pathname.match(/\/invoices\/\w+/),
+			match: (pathname: string) => {
+				const [uuid] = findUUIDSFromPathname(pathname);
+				return pathname === `/invoices/${uuid}`;
+			},
 			title: "Invoices",
 			header: "Invoices",
 		},
@@ -41,7 +46,10 @@ const ROUTES = {
 		CLIENTS_EDIT: {
 			path: "/clients/$id",
 			get: (id: string) => `/clients/${id}`,
-			match: (pathname: string) => pathname.match(/\/clients\/\w+/),
+			match: (pathname: string) => {
+				const [uuid] = findUUIDSFromPathname(pathname);
+				return pathname === `/clients/${uuid}`;
+			},
 			title: "Edit Client",
 			header: "Edit Client",
 		},

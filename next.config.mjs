@@ -8,15 +8,11 @@ const nextConfig = {
 			},
 			{
 				source: "/clients/:id",
-				destination: "/clients/form",
-			},
-			{
-				source: "/invoices/new",
-				destination: "/invoices/form",
+				destination: "/clients/edit",
 			},
 			{
 				source: "/invoices/:id",
-				destination: "/invoices/form",
+				destination: "/invoices/edit",
 			},
 		];
 	},

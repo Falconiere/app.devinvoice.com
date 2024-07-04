@@ -1,5 +1,6 @@
 "use client";
-import { useClientTableController } from "@/app/(main)/clients/_controllers/useClientTableController";
+
+import { useClientListController } from "@/app/(main)/clients/_controllers/useClientListController";
 import { DataTable } from "@/app/_components/DataTable";
 import { DeleteDialog } from "@/app/_components/DeleteDialog";
 import type { Client } from "@/database/services/client/types";
@@ -19,7 +20,7 @@ const ClientList = ({ hideActions, hideHeader, onSelect }: ClientListProps) => {
     isDeleteDialogOpen,
     onClose,
     onDelete,
-  } = useClientTableController({ hideActions });
+  } = useClientListController({ hideActions });
 
   return (
     <>

@@ -1,12 +1,12 @@
 "use client";
 
-import { useUserProfile } from "@/app/_queries/users/useUserProfile";
-import { useUserSave } from "@/app/_queries/users/useUserSave";
+import { useUserProfile } from "@/app/_queries/user/useUserProfile";
+import { useUserSave } from "@/app/_queries/user/useUserSave";
 import { useToast } from "@/components/ui/use-toast";
 import {
 	type UpdateUserProfile,
 	type UserProfile,
-	updateUserSchema,
+	updateUserZodSchema,
 } from "@/database/services/user/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +29,7 @@ const useAccountDetailsFormController = ({
 	const userId = currentUser?.id ?? profile?.id ?? "";
 	const { mutateAsync, isPending } = useUserSave(userId);
 	const { handleSubmit, control, setValue } = useForm<UserProfile>({
-		resolver: zodResolver(updateUserSchema),
+		resolver: zodResolver(updateUserZodSchema),
 		defaultValues: {
 			firstName: profile?.firstName,
 			lastName: profile?.lastName,

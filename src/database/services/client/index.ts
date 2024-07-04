@@ -45,7 +45,6 @@ const getClientPaginated: GetClientPaginated = async ({
 		.orderBy(desc(client.createdAt))
 		.limit(limit)
 		.offset(offset);
-	// calculate pages
 
 	const total = await db.select({ count: count() }).from(client);
 

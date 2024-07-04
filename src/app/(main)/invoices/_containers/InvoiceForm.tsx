@@ -1,8 +1,10 @@
 "use client";
 import { ClientListModal } from "@/app/(main)/clients/_containers/ClientListModal";
 import { BillBasicInfo } from "@/app/(main)/invoices/_components/BillInfo";
+
 import { useInvoiceFormController } from "@/app/(main)/invoices/_controllers/useInvoiceFormController";
 import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
+import { CurrencyInput } from "@/app/_components/CurrencyInput";
 
 import {
   ComboBoxController,
@@ -15,13 +17,17 @@ import {
 
 import { toMoney } from "@/app/_utils/toMoney";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { currenciesInputOptions } from "@/data/currencies";
+import type { Invoice } from "@/database/services/invoice/types";
 
 import { TrashIcon } from "lucide-react";
 import { Fragment } from "react";
+import { Controller } from "react-hook-form";
 
-const InvoiceForm = () => {
+type InvoiceFormProps = {
+  invoice?: Invoice;
+};
+const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
   const {
     control,
     items,
@@ -29,14 +35,14 @@ const InvoiceForm = () => {
     currentClient,
     currentBusiness,
     isSelectClientOpen,
+    isSaving,
     onSubmit,
     onAddItem,
     onRemoveItem,
-    setAmount,
     setIsSelectClientOpen,
-    setCurrentClient,
-    errors,
-  } = useInvoiceFormController();
+    onSelectClient,
+    getAmount,
+  } = useInvoiceFormController({ invoice });
 
   return (
     <>
@@ -50,7 +56,7 @@ const InvoiceForm = () => {
             name="invoiceNumber"
             label="Invoice (#)"
           />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-[150px,150px,150px] gap-4">
             <ComboBoxController
               control={control}
               name="currency"
@@ -95,33 +101,39 @@ const InvoiceForm = () => {
             country={currentBusiness?.country}
             email={currentBusiness?.email}
             phone={currentBusiness?.phone}
-            error={errors.businessId?.message}
+            onEdit={() => {}}
           />
-          <BillBasicInfo
-            title="Bill To"
-            name={currentClient?.name}
-            address={
-              currentClient &&
-              formatAddress({
-                addressLine1: currentClient?.addressLine1,
-                addressLine2: currentClient?.addressLine2,
-                city: currentClient?.city,
-                state: currentClient?.state,
-                country: currentClient?.country,
-              })
-            }
-            country={currentClient?.country}
-            email={currentClient?.email}
-            phone={currentClient?.phone}
-            onSelect={() => setIsSelectClientOpen(true)}
-            error={errors.clientId?.message}
+          <Controller
+            control={control}
+            name="clientId"
+            render={({ formState: { errors } }) => (
+              <BillBasicInfo
+                title="Bill To"
+                name={currentClient?.name}
+                address={
+                  currentClient &&
+                  formatAddress({
+                    addressLine1: currentClient?.addressLine1,
+                    addressLine2: currentClient?.addressLine2,
+                    city: currentClient?.city,
+                    state: currentClient?.state,
+                    country: currentClient?.country,
+                  })
+                }
+                country={currentClient?.country}
+                email={currentClient?.email}
+                phone={currentClient?.phone}
+                onSelect={() => setIsSelectClientOpen(true)}
+                error={errors.clientId?.message}
+              />
+            )}
           />
         </div>
         <hr />
         <div className="grid grid-cols-[auto,150px,150px,150px] gap-4">
           <span>Item/Task</span>
           <span>Quantity</span>
-          <span>Rate</span>
+          <span>price</span>
           <span>Amount</span>
         </div>
         <div className="grid grid-cols-[auto,150px,150px,150px,max-content] gap-4 items-start">
@@ -135,18 +147,12 @@ const InvoiceForm = () => {
               <NumericController
                 control={control}
                 name={`items.${idx}.quantity`}
-                onKeyUp={() => setAmount(idx)}
               />
               <CurrencyController
                 control={control}
-                name={`items.${idx}.rate`}
-                onKeyUp={() => setAmount(idx)}
+                name={`items.${idx}.price`}
               />
-              <CurrencyController
-                control={control}
-                name={`items.${idx}.amount`}
-                disabled
-              />
+              <CurrencyInput prefix="$" value={getAmount(idx)} readOnly />
               {items.length > 1 && (
                 <Button
                   variant="ghost"
@@ -166,7 +172,11 @@ const InvoiceForm = () => {
           </Button>
         </div>
         <div>
-          <Textarea label="Client Notes" />
+          <TextareaController
+            control={control}
+            name="notes"
+            label="Client Notes"
+          />
         </div>
         <hr />
         <div className="grid w-full max-w-2xl mr-0 ml-auto gap-2">
@@ -177,16 +187,15 @@ const InvoiceForm = () => {
         </div>
         <hr />
         <div className="flex justify-end">
-          <Button>Save Invoice</Button>
+          <Button disabled={isSaving}>
+            {isSaving ? "Saving..." : "Save Invoice"}
+          </Button>
         </div>
       </form>
       <ClientListModal
         open={isSelectClientOpen}
         onClose={() => setIsSelectClientOpen(false)}
-        onSelect={(selectedClient) => {
-          setCurrentClient(selectedClient);
-          setIsSelectClientOpen(false);
-        }}
+        onSelect={onSelectClient}
       />
     </>
   );

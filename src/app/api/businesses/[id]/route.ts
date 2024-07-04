@@ -1,5 +1,5 @@
 import { updateBusiness } from "@/database/services/business";
-import { businessSchema } from "@/database/services/business/types";
+import { businessZodSchema } from "@/database/services/business/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const PATCH = async (
@@ -8,7 +8,7 @@ export const PATCH = async (
 ) =>
 	apiMiddleware.patch(req, async (user, payload) => {
 		try {
-			const isValid = businessSchema.omit({ userId: true }).parse(payload);
+			const isValid = businessZodSchema.omit({ userId: true }).parse(payload);
 			if (!isValid) {
 				return new Response(
 					JSON.stringify({ message: "error", error: isValid }),

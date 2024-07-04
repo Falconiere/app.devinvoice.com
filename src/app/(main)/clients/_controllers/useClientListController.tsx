@@ -1,4 +1,4 @@
-import { useClientPaginated } from "@/app/_queries/clients/useClientPaginated";
+import { useClientPaginated } from "@/app/_queries/client/useClientPaginated";
 import { apiRoute } from "@/app/_utils/apiRoute";
 import { http } from "@/app/_utils/http";
 import { ROUTES } from "@/app/routes";
@@ -18,12 +18,10 @@ import { Edit2Icon, EllipsisIcon, Trash } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-type UseClientTableController = {
+type UseClientListController = {
   hideActions?: boolean;
 };
-const useClientTableController = ({
-  hideActions,
-}: UseClientTableController) => {
+const useClientListController = ({ hideActions }: UseClientListController) => {
   const { toast } = useToast();
   const { data, isLoading, hasNextPage, fetchNextPage, refetch } =
     useClientPaginated();
@@ -117,4 +115,4 @@ const useClientTableController = ({
   };
 };
 
-export { useClientTableController };
+export { useClientListController };

@@ -47,14 +47,20 @@ function DataTable<TData, TValue>({
 
   return (
     <div className="grid gap-4 items-center">
-      <Table className="rounded-md border bg-white">
+      <Table className="rounded-md border bg-white overflow-hidden">
         {!hideHeader && (
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow
+                key={headerGroup.id}
+                className="bg-gray-800 hover:bg-gray-800 px-4 py-3"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="text-white font-semibold"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -69,35 +75,33 @@ function DataTable<TData, TValue>({
           </TableHeader>
         )}
         <TableBody>
-          {totalRows ? (
-            rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className="hover:bg-gray-50 transition-colors duration-200 ease-in-out cursor-pointer"
-                onDoubleClick={() => {
-                  if (!row.getIsSelected()) {
-                    row.toggleSelected();
-                  }
-                  onRowSubmit?.(row.original);
-                }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="last:text-right">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                {isLoading ? " Loading..." : "No results."}
-              </TableCell>
+          {rows.map((row) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && "selected"}
+              className="hover:bg-gray-50 transition-colors duration-200 ease-in-out cursor-pointer"
+              onDoubleClick={() => {
+                row.toggleSelected();
+                onRowSubmit?.(row.original);
+              }}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id} className="last:text-right">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
+      {isLoading && (
+        <div className="grid gap-4 bg-white p-4">
+          <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
+          <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
+          <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
+          <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
+        </div>
+      )}
       {totalRows && hasNextPage ? (
         <Button onClick={onLoadMore}>Load more</Button>
       ) : (

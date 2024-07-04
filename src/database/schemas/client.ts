@@ -2,7 +2,7 @@ import { business } from "@/database/schemas/business";
 import { countryEnum } from "@/database/schemas/country";
 import { invoice } from "@/database/schemas/invoice";
 import { relations, sql } from "drizzle-orm";
-import { pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const client = pgTable("client", {
 	id: uuid("id").default(sql`uuid_generate_v4()`).primaryKey().unique(),
@@ -24,8 +24,8 @@ export const client = pgTable("client", {
 			onDelete: "cascade",
 		})
 		.notNull(),
-	createdAt: text("createdAt").default(sql`now()`),
-	updatedAt: text("updatedAt").default(sql`now()`),
+	createdAt: timestamp("createdAt").default(sql`now()`),
+	updatedAt: timestamp("updatedAt").default(sql`now()`),
 });
 
 export const clientRelation = relations(client, ({ one, many }) => ({

@@ -3,7 +3,7 @@ import { business } from "@/database/schemas/business";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const businessSchema = createInsertSchema(business, {
+export const businessZodSchema = createInsertSchema(business, {
 	email: z.string().email({ message: "Invalid email" }),
 	name: z.string().min(3, { message: "Name must be at least 3 characters" }),
 	firstName: z

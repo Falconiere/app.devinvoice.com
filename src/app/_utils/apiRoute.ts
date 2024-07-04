@@ -20,6 +20,14 @@ const apiRoute = {
 		patch: (id: string) => `${base}/clients/${id}`,
 		delete: (id: string) => `${base}/clients/${id}`,
 	},
+	invoices: {
+		post: `${base}/invoices`,
+		get: (id: string) => `${base}/invoices/${id}`,
+		list: (query: { page: number; limit: number }) =>
+			`${base}/invoices/${toUrlQuery(query)}`,
+		patch: (id: string) => `${base}/invoices/${id}`,
+		delete: (id: string) => `${base}/invoices/${id}`,
+	},
 } as const;
 
 export { apiRoute };

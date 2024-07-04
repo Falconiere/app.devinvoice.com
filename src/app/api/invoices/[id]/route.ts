@@ -1,14 +1,14 @@
-import { getUserById, updateUserProfile } from "@/database/services/user";
-import { updateUserZodSchema } from "@/database/services/user/types";
+import { getInvoiceById, updateInvoice } from "@/database/services/invoice";
+import { invoiceZodSchema } from "@/database/services/invoice/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const PATCH = async (
 	req: Request,
 	{ params }: { params: { id: string } },
 ) =>
-	apiMiddleware.patch(req, async (_, payload) => {
+	apiMiddleware.post(req, async (_, payload) => {
 		try {
-			const isValid = updateUserZodSchema.parse(payload);
+			const isValid = invoiceZodSchema.parse(payload);
 			if (!isValid) {
 				return new Response(
 					JSON.stringify({ message: "error", error: isValid }),
@@ -17,8 +17,8 @@ export const PATCH = async (
 					},
 				);
 			}
-
-			const response = await updateUserProfile(params.id, payload);
+			const invoiceId = params.id;
+			const response = await updateInvoice(invoiceId, payload);
 			return new Response(
 				JSON.stringify({ message: "success", data: response }),
 				{
@@ -38,7 +38,8 @@ export const GET = async (
 ) =>
 	apiMiddleware.get(req, async () => {
 		try {
-			const response = await getUserById(params.id);
+			const invoiceId = params.id;
+			const response = await getInvoiceById(invoiceId);
 			return new Response(
 				JSON.stringify({ message: "success", data: response }),
 				{
@@ -46,7 +47,7 @@ export const GET = async (
 				},
 			);
 		} catch (error) {
-			return new Response(JSON.stringify({ message: "error" }), {
+			return new Response(JSON.stringify({ message: "error", error }), {
 				status: 500,
 			});
 		}

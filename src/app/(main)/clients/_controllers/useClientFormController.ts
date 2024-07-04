@@ -1,9 +1,9 @@
-import { useClient } from "@/app/_queries/clients/useClient";
-import { useClientSave } from "@/app/_queries/clients/useClientSave";
+import { useClient } from "@/app/_queries/client/useClient";
+import { useClientSave } from "@/app/_queries/client/useClientSave";
 
 import { useToast } from "@/components/ui/use-toast";
 
-import { type Client, clientSchema } from "@/database/services/client/types";
+import { type Client, clientZodSchema } from "@/database/services/client/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ const useClientFormController = (options?: UseClientFormController) => {
 	const form = useForm<Client>({
 		defaultValues: currentClient,
 		resolver: zodResolver(
-			clientSchema.omit({ createdAt: true, updatedAt: true }),
+			clientZodSchema.omit({ createdAt: true, updatedAt: true }),
 		),
 	});
 
