@@ -1,3 +1,4 @@
+"use client";
 import { useBusinessSave } from "@/app/_queries/business/useBusinessSave";
 import { useUserProfile } from "@/app/_queries/user/useUserProfile";
 
@@ -18,7 +19,7 @@ type UseBusinessFormController = {
 const useBusinessFormController = (options?: UseBusinessFormController) => {
 	const { onSuccess, onError } = options ?? {};
 	const { refresh } = useRouter();
-	const { data, isLoading } = useUserProfile();
+	const { data, isLoading, refetch: refetchUser } = useUserProfile();
 	const { toast } = useToast();
 
 	const business = data?.businesses?.[0];
@@ -53,6 +54,7 @@ const useBusinessFormController = (options?: UseBusinessFormController) => {
 				variant: "default",
 				duration: 2000,
 			});
+			await refetchUser();
 			onSuccess?.();
 		} catch {
 			toast({

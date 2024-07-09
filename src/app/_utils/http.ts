@@ -18,11 +18,11 @@ const throwErrorMessage = async (response: Response) => {
 	throw error;
 };
 
-const mutate = async <T>(
+const mutate = async <TData, TPayload>(
 	method: "POST" | "PATCH",
 	url: string,
-	payload: T,
-): Promise<{ data?: T; message: string } | undefined> => {
+	payload: TPayload,
+): Promise<{ data?: TData; message: string } | undefined> => {
 	const token = await getCurrentToken();
 	const response = await fetch(url, {
 		method,
@@ -38,10 +38,10 @@ const mutate = async <T>(
 	return throwErrorMessage(response);
 };
 
-const query = async <T>(
+const query = async <TData>(
 	method: "GET" | "DELETE",
 	url: string,
-): Promise<{ data?: T; message: string } | undefined> => {
+): Promise<{ data?: TData; message: string } | undefined> => {
 	const token = await getCurrentToken();
 	const response = await fetch(url, {
 		method,
@@ -57,10 +57,12 @@ const query = async <T>(
 };
 
 const http = {
-	get: async <T>(url: string) => query<T>("GET", url),
-	delete: async <T>(url: string) => query<T>("DELETE", url),
-	patch: async <T>(url: string, payload: T) => mutate<T>("PATCH", url, payload),
-	post: async <T>(url: string, payload: T) => mutate<T>("POST", url, payload),
+	get: async <TData>(url: string) => query<TData>("GET", url),
+	delete: async <TData>(url: string) => query<TData>("DELETE", url),
+	patch: async <TData, TPayload>(url: string, payload: TPayload) =>
+		mutate<TData, TPayload>("PATCH", url, payload),
+	post: async <TData, TPayload>(url: string, payload: TPayload) =>
+		mutate<TData, TPayload>("POST", url, payload),
 };
 
 export { http };

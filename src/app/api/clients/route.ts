@@ -50,9 +50,9 @@ export const GET = async (req: Request) =>
 			}
 
 			const payload = {
+				businessId: currentActiveBusiness?.businesses[0].id,
 				page: Number(page),
 				limit: Number(limit),
-				businessId: currentActiveBusiness?.businesses[0].id,
 			};
 
 			const response = await getClientPaginated(payload);

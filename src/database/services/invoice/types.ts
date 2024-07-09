@@ -1,10 +1,13 @@
 import { invoice } from "@/database/schemas/invoice";
 import { invoiceItem } from "@/database/schemas/invoiceItem";
+import { invoiceStatus } from "@/database/schemas/invoiceStatus";
 import { businessZodSchema } from "@/database/services/business/types";
 import { clientZodSchema } from "@/database/services/client/types";
+import type { InferInsertModel } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export const invoiceStatusZodSchema = z.enum(invoiceStatus.enumValues);
 export const invoiceItemZodSchema = createSelectSchema(invoiceItem)
 	.omit({
 		createdAt: true,
@@ -37,11 +40,19 @@ export const invoiceZodSchema = createSelectSchema(invoice)
 		businessId: z.string().uuid(),
 		business: businessZodSchema.optional(),
 		client: clientZodSchema.optional(),
+		status: invoiceStatusZodSchema.optional(),
 	})
 	.omit({
 		createdAt: true,
 		updatedAt: true,
 	});
 
-export type InvoiceItem = z.infer<typeof invoiceItemZodSchema>;
-export type Invoice = z.infer<typeof invoiceZodSchema>;
+export type InvoiceStatus = z.infer<typeof invoiceStatusZodSchema>;
+export type InvoiceItem = InferInsertModel<typeof invoiceItem>;
+export type Invoice = InferInsertModel<typeof invoice> & {
+	items: InvoiceItem[];
+	client?: z.infer<typeof clientZodSchema>;
+	business?: z.infer<typeof businessZodSchema>;
+};
+
+export type InvoicePayload = z.infer<typeof invoiceZodSchema>;

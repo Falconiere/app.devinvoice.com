@@ -3,6 +3,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
 import type { Business } from "@/database/services/business/types";
+import type { InferInsertModel } from "drizzle-orm";
 export const selectUserZodSchema = createSelectSchema(userProfile);
 
 export type UserProfile = z.infer<typeof selectUserZodSchema> & {
@@ -25,4 +26,4 @@ export const updateUserZodSchema = createInsertSchema(userProfile, {
 	updatedAt: z.date().optional(),
 });
 
-export type UpdateUserProfile = z.infer<typeof selectUserZodSchema>;
+export type UpdateUserProfile = InferInsertModel<typeof userProfile>;

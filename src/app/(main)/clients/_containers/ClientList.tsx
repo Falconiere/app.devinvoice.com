@@ -1,16 +1,12 @@
 "use client";
-
 import { useClientListController } from "@/app/(main)/clients/_controllers/useClientListController";
 import { DataTable } from "@/app/_components/DataTable";
 import { DeleteDialog } from "@/app/_components/DeleteDialog";
-import type { Client } from "@/database/services/client/types";
+import { ROUTES } from "@/app/routes";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-type ClientListProps = {
-  hideActions?: boolean;
-  hideHeader?: boolean;
-  onSelect?: (client: Client) => void;
-};
-const ClientList = ({ hideActions, hideHeader, onSelect }: ClientListProps) => {
+const ClientList = () => {
   const {
     columns,
     data,
@@ -20,18 +16,23 @@ const ClientList = ({ hideActions, hideHeader, onSelect }: ClientListProps) => {
     isDeleteDialogOpen,
     onClose,
     onDelete,
-  } = useClientListController({ hideActions });
+  } = useClientListController();
 
   return (
     <>
+      <div className="flex items-center justify-end gap-2">
+        <Button asChild>
+          <Link href={ROUTES.PRIVATE.CLIENTS_ADD.path} prefetch>
+            New Client
+          </Link>
+        </Button>
+      </div>
       <DataTable
         columns={columns}
         isLoading={isLoading}
         data={data?.results ?? []}
-        hideHeader={hideHeader}
         hasNextPage={hasNextPage}
         onLoadMore={fetchNextPage}
-        onRowSubmit={onSelect}
       />
       <DeleteDialog
         open={isDeleteDialogOpen}

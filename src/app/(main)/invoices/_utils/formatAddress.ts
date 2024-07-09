@@ -5,6 +5,13 @@ type Address = Pick<
 	"addressLine1" | "addressLine2" | "city" | "country" | "state"
 >;
 const formatAddress = (address: Address) => {
-	return `${address.addressLine1}, ${address.addressLine2}, ${address.city}, ${address.state}, ${address.country}`;
+	const arr = [
+		address.addressLine1,
+		address.addressLine2,
+		address.city,
+		address.state,
+		address.country,
+	];
+	return arr.filter(Boolean).join(", ");
 };
 export { formatAddress };

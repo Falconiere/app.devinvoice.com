@@ -14,6 +14,10 @@ const nextConfig = {
 				source: "/invoices/:id",
 				destination: "/invoices/edit",
 			},
+			{
+				source: "/invoices/pdf/:id",
+				destination: "/pdf",
+			},
 		];
 	},
 };

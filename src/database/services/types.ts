@@ -5,7 +5,11 @@ export type PaginatedServerData<T> = {
 	prev: string | null;
 };
 
-export type PaginatedPayload = {
+export interface PaginatedPayload extends Record<string, string | number> {
 	page: number;
 	limit: number;
-};
+}
+
+export type GetQueryPaginated<T> = (
+	payload: PaginatedPayload,
+) => Promise<PaginatedServerData<T>>;

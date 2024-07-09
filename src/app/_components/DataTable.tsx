@@ -86,7 +86,10 @@ function DataTable<TData, TValue>({
               }}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="last:text-right">
+                <TableCell
+                  key={cell.id}
+                  className="last:text-right font-semibold"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

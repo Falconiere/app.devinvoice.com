@@ -1,6 +1,7 @@
 import { business } from "@/database/schemas/business";
 import { client } from "@/database/schemas/client";
 import { invoiceItem } from "@/database/schemas/invoiceItem";
+import { invoiceStatus } from "@/database/schemas/invoiceStatus";
 import { relations, sql } from "drizzle-orm";
 import { date, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
@@ -22,6 +23,7 @@ export const invoice = pgTable("invoice", {
 	description: text("description"),
 	notes: text("notes"),
 	currency: text("currency").default("USD"),
+	status: invoiceStatus("status").default("UNPAID"),
 	createdAt: timestamp("createdAt").default(sql`now()`),
 	updatedAt: timestamp("updatedAt").default(sql`now()`),
 });

@@ -4,7 +4,7 @@ type ContentBoxProps = {
   isLoading?: boolean;
 };
 const ContentBox = ({ title, isLoading, children }: ContentBoxProps) => (
-  <div className="rounded-sm overflow-hidden shadow-md bg-white relative">
+  <div className={"rounded-sm overflow-hidden bg-white relative"}>
     {title && (
       <div className="bg-gray-800 px-4 py-3">
         <h4 className="text-white font-semibold">{title}</h4>

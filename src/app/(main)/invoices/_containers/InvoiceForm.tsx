@@ -1,9 +1,12 @@
 "use client";
+import { ClientFormModal } from "@/app/(main)/clients/_containers/ClientFormModal";
 import { ClientListModal } from "@/app/(main)/clients/_containers/ClientListModal";
 import { BillBasicInfo } from "@/app/(main)/invoices/_components/BillInfo";
 
 import { useInvoiceFormController } from "@/app/(main)/invoices/_controllers/useInvoiceFormController";
 import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
+import { BusinessFormModal } from "@/app/(main)/settings/business/_containers/BusinessFormModal";
+
 import { CurrencyInput } from "@/app/_components/CurrencyInput";
 
 import {
@@ -35,6 +38,8 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
     currentClient,
     currentBusiness,
     isSelectClientOpen,
+    isBusinessFormOpen,
+    isClientFormOpen,
     isSaving,
     onSubmit,
     onAddItem,
@@ -42,6 +47,8 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
     setIsSelectClientOpen,
     onSelectClient,
     getAmount,
+    onToggleEditBusiness,
+    onToggleEditClient,
   } = useInvoiceFormController({ invoice });
 
   return (
@@ -101,7 +108,7 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
             country={currentBusiness?.country}
             email={currentBusiness?.email}
             phone={currentBusiness?.phone}
-            onEdit={() => {}}
+            onEdit={onToggleEditBusiness}
           />
           <Controller
             control={control}
@@ -125,6 +132,7 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
                 phone={currentClient?.phone}
                 onSelect={() => setIsSelectClientOpen(true)}
                 error={errors.clientId?.message}
+                onEdit={currentClient && onToggleEditClient}
               />
             )}
           />
@@ -196,6 +204,17 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
         open={isSelectClientOpen}
         onClose={() => setIsSelectClientOpen(false)}
         onSelect={onSelectClient}
+      />
+      {currentClient && (
+        <ClientFormModal
+          open={isClientFormOpen}
+          onClose={onToggleEditClient}
+          client={currentClient}
+        />
+      )}
+      <BusinessFormModal
+        open={isBusinessFormOpen}
+        onClose={onToggleEditBusiness}
       />
     </>
   );

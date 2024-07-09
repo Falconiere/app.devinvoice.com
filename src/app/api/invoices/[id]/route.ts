@@ -6,7 +6,7 @@ export const PATCH = async (
 	req: Request,
 	{ params }: { params: { id: string } },
 ) =>
-	apiMiddleware.post(req, async (_, payload) => {
+	apiMiddleware.patch(req, async (_, payload) => {
 		try {
 			const isValid = invoiceZodSchema.parse(payload);
 			if (!isValid) {

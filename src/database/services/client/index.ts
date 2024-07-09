@@ -2,10 +2,8 @@ import { apiRoute } from "@/app/_utils/apiRoute";
 import { db } from "@/database/db";
 import { client } from "@/database/schemas/client";
 import type { Client } from "@/database/services/client/types";
-import type {
-	PaginatedPayload,
-	PaginatedServerData,
-} from "@/database/services/types";
+import type { GetQueryPaginated } from "@/database/services/types";
+import { buildPaginationResponse } from "@/database/utils/buildPaginationResponse";
 import { count, desc, eq } from "drizzle-orm";
 
 const createClient = async (values: Client) => {
@@ -26,13 +24,7 @@ const getClientById = async (id: string) => {
 	});
 };
 
-type GetClientPaginated = (
-	payload: PaginatedPayload & {
-		businessId: string;
-	},
-) => Promise<PaginatedServerData<Client>>;
-
-const getClientPaginated: GetClientPaginated = async ({
+const getClientPaginated: GetQueryPaginated<Client> = async ({
 	page,
 	limit,
 	businessId,
@@ -41,23 +33,21 @@ const getClientPaginated: GetClientPaginated = async ({
 	const results = await db
 		.select()
 		.from(client)
-		.where(eq(client.businessId, businessId))
+		.where(eq(client.businessId, String(businessId)))
 		.orderBy(desc(client.createdAt))
 		.limit(limit)
 		.offset(offset);
 
-	const total = await db.select({ count: count() }).from(client);
+	const counted = await db.select({ count: count() }).from(client);
+	const total = counted[0].count;
 
-	const totalPages = Math.ceil(total[0].count / limit);
-	const nextPage = page < totalPages ? page + 1 : null;
-	const prevPage = page > 1 ? page - 1 : null;
-
-	return {
+	return buildPaginationResponse<Client>({
+		page,
+		limit,
+		total,
 		results,
-		total: total[0].count,
-		next: nextPage ? apiRoute.clients.list({ page: nextPage, limit }) : null,
-		prev: prevPage ? apiRoute.clients.list({ page: prevPage, limit }) : null,
-	};
+		url: apiRoute.clients.root,
+	});
 };
 
 const deleteClient = async (id: string) => {

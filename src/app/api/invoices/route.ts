@@ -7,7 +7,7 @@ import { getUserById } from "@/database/services/user";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
 export const POST = async (req: Request) =>
-	apiMiddleware.post(req, async (user, payload) => {
+	apiMiddleware.post(req, async (_, payload) => {
 		try {
 			const isValid = invoiceZodSchema.parse(payload);
 			if (!isValid) {

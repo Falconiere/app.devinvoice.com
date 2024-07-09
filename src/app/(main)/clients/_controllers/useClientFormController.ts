@@ -3,32 +3,39 @@ import { useClientSave } from "@/app/_queries/client/useClientSave";
 
 import { useToast } from "@/components/ui/use-toast";
 
-import { type Client, clientZodSchema } from "@/database/services/client/types";
+import {
+	type Client,
+	type ClientPayload,
+	clientZodSchema,
+} from "@/database/services/client/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 type UseClientFormController = {
-	onSuccess?: () => void;
+	onSuccess?: (data: Client) => void;
 	onError?: () => void;
 	client?: Client;
 };
 
 const useClientFormController = (options?: UseClientFormController) => {
-	const { client: currentClient } = options ?? {};
-	const { replace } = useRouter();
+	const { client: currentClient, onSuccess } = options ?? {};
+
 	const { toast } = useToast();
 
 	const { mutateAsync, isPending } = useClientSave(currentClient?.id);
-	const form = useForm<Client>({
+	const form = useForm<ClientPayload>({
 		defaultValues: currentClient,
 		resolver: zodResolver(
 			clientZodSchema.omit({ createdAt: true, updatedAt: true }),
 		),
 	});
 
-	const { data: client, isLoading } = useClient(currentClient?.id);
+	const {
+		data: client,
+		isLoading,
+		refetch: refetchClient,
+	} = useClient(currentClient?.id);
 
 	const {
 		handleSubmit,
@@ -42,7 +49,7 @@ const useClientFormController = (options?: UseClientFormController) => {
 			for (const [key, value] of Object.entries(client)) {
 				// Skip createdAt and updatedAt fields, will be handled by the server
 				if (key === "createdAt" || key === "updatedAt") continue;
-				setValue(key as keyof Client, value as string);
+				setValue(key as keyof ClientPayload, value as string);
 			}
 		}
 	}, [client, setValue]);
@@ -56,8 +63,9 @@ const useClientFormController = (options?: UseClientFormController) => {
 				variant: "default",
 				duration: 2000,
 			});
-
-			if (savedClient?.data?.id) replace(`/clients/${savedClient.data.id}`);
+			await refetchClient();
+			if (!savedClient?.data) return;
+			onSuccess?.(savedClient.data);
 		} catch {
 			toast({
 				title: "Error!",

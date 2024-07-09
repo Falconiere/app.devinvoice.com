@@ -1,5 +1,6 @@
 import { countryCodes } from "@/data/countries";
 import { business } from "@/database/schemas/business";
+import type { InferInsertModel } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -31,4 +32,4 @@ export const businessZodSchema = createInsertSchema(business, {
 	updatedAt: z.date().optional(),
 });
 
-export type Business = typeof business.$inferSelect;
+export type Business = InferInsertModel<typeof business>;

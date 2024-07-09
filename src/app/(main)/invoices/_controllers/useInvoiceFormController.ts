@@ -1,3 +1,4 @@
+import { useClient } from "@/app/_queries/client/useClient";
 import { useInvoiceSave } from "@/app/_queries/invoice/useInvoiceSave";
 import { useUserProfile } from "@/app/_queries/user/useUserProfile";
 import { ROUTES } from "@/app/routes";
@@ -5,8 +6,10 @@ import { useToast } from "@/components/ui/use-toast";
 import type { Business } from "@/database/services/business/types";
 
 import type { Client } from "@/database/services/client/types";
+
 import {
 	type Invoice,
+	type InvoicePayload,
 	invoiceZodSchema,
 } from "@/database/services/invoice/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,30 +17,37 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
+
 type UseInvoiceFormController = {
 	invoice?: Invoice;
 };
-const useInvoiceFormController = ({ invoice }: UseInvoiceFormController) => {
-	const { toast } = useToast();
 
+const useInvoiceFormController = ({
+	invoice: currentInvoice,
+}: UseInvoiceFormController) => {
+	const { toast } = useToast();
+	const invoice = currentInvoice as unknown as InvoicePayload;
 	const invoiceId = invoice?.id;
-	const [currentClient, setCurrentClient] = useState<Client>();
+	const [currentClientId, setCurrentClientId] = useState<string>();
 	const [currentBusiness, setCurrentBusiness] = useState<Business>();
 	const [isSelectClientOpen, setIsSelectClientOpen] = useState(false);
+	const [isBusinessFormOpen, setIsBusinessFormOpen] = useState(false);
+	const [isClientFormOpen, setIsClientFormOpen] = useState(false);
 	const { data: profile } = useUserProfile();
+	const { data: currentClient, refetch: refetchClient } =
+		useClient(currentClientId);
 
 	const { replace } = useRouter();
 
 	const { mutateAsync: saveInvoice, isPending: isSaving } =
 		useInvoiceSave(invoiceId);
-	const form = useForm<Invoice>({
+
+	const form = useForm<InvoicePayload>({
 		resolver: zodResolver(
 			invoiceZodSchema.omit({ business: true, client: true }),
 		),
 		defaultValues: {
-			...invoice,
-			date: new Date(),
-			dueDate: new Date(),
+			...(invoice as unknown as InvoicePayload),
 			currency: "USD",
 			items: [{ description: "", quantity: 0, price: 0 }],
 		},
@@ -47,31 +57,32 @@ const useInvoiceFormController = ({ invoice }: UseInvoiceFormController) => {
 
 	const fillForm = useCallback(() => {
 		for (const key in invoice) {
-			const formKey = key as keyof Invoice;
-			setValue(formKey, invoice[formKey]);
+			const formKey = key as keyof InvoicePayload;
+			setValue(formKey, (invoice as InvoicePayload)[formKey]);
 			if (formKey === "items") {
 				invoice[formKey].forEach((item, index) => {
-					setValue(`items.${index}.description`, item.description);
-					setValue(`items.${index}.quantity`, item.quantity);
-					setValue(`items.${index}.price`, item.price);
+					setValue(`items.${index}.description`, item.description ?? "");
+					setValue(`items.${index}.quantity`, item.quantity ?? 0);
+					setValue(`items.${index}.price`, item.price ?? 0);
 				});
 			}
 			if (formKey === "date" || formKey === "dueDate") {
 				setValue(formKey, new Date(`${invoice[formKey]} EDT`));
 			}
 			if (formKey === "client" && invoice.client)
-				setCurrentClient(invoice.client as Client);
+				setCurrentClientId(invoice.client?.id);
+			refetchClient();
 			if (formKey === "business" && invoice.business)
 				setCurrentBusiness(invoice.business as Business);
 		}
-	}, [invoice, setValue]);
+	}, [invoice, refetchClient, setValue]);
 
 	useEffect(() => {
 		if (invoice) {
 			fillForm();
 			return;
 		}
-		if (profile?.businesses?.length) {
+		if (profile?.businesses?.[0]?.id) {
 			const businessId = profile.businesses[0].id;
 			setValue("businessId", businessId);
 			setCurrentBusiness(profile.businesses[0]);
@@ -82,9 +93,9 @@ const useInvoiceFormController = ({ invoice }: UseInvoiceFormController) => {
 	const onAddItem = () => {
 		append({
 			description: "",
-			quantity: 1,
-			price: 1,
-			invoiceId: "",
+			quantity: 0,
+			price: 0,
+			invoiceId: invoice?.id ?? "",
 		});
 	};
 
@@ -120,37 +131,49 @@ const useInvoiceFormController = ({ invoice }: UseInvoiceFormController) => {
 	});
 
 	const total = useMemo(() => {
-		return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+		return items.reduce((acc, item) => {
+			const quantity = item.quantity ?? 0;
+			const price = item.price ?? 0;
+			return acc + quantity * price;
+		}, 0);
 	}, [items]);
 
 	const onSelectClient = (client: Client) => {
-		setCurrentClient(client);
-		setValue("clientId", client.id);
+		setCurrentClientId(client.id);
+		refetchClient();
+		if (client.id) setValue("clientId", client.id);
 		setIsSelectClientOpen(false);
 	};
 
+	const onToggleEditBusiness = () => setIsBusinessFormOpen(!isBusinessFormOpen);
+	const onToggleEditClient = () => setIsClientFormOpen(!isClientFormOpen);
+
 	const getAmount = (idx: number) => {
 		const item = items[idx];
-		return item.quantity * item.price;
+		const quantity = item?.quantity ?? 0;
+		const price = item?.price ?? 0;
+		return quantity * price;
 	};
 
 	return {
 		control,
-		onSubmit,
 		items: fields,
 		total,
-		onAddItem,
-		onRemoveItem,
 		currentClient,
 		currentBusiness,
-		setCurrentClient,
 		isSelectClientOpen,
-		setIsSelectClientOpen,
+		isBusinessFormOpen,
 		profile,
+		isSaving,
+		isClientFormOpen,
+		setIsSelectClientOpen,
 		onSelectClient,
 		getAmount,
-
-		isSaving,
+		onSubmit,
+		onAddItem,
+		onRemoveItem,
+		onToggleEditBusiness,
+		onToggleEditClient,
 	};
 };
 export { useInvoiceFormController };

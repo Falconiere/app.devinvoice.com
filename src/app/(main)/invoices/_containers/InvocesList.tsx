@@ -20,7 +20,7 @@ const InvoicesList = () => {
           </TabsList>
           <Button asChild>
             <Link href={ROUTES.PRIVATE.INVOICES_ADD.path} prefetch>
-              Create Invoice
+              New Invoice
             </Link>
           </Button>
         </div>

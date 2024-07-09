@@ -7,13 +7,21 @@ import type { Business } from "@/database/services/business/types";
 
 import { useFormContext } from "react-hook-form";
 
-const BusinessAddressForm = () => {
+type BusinessAddressFormProps = {
+  hiddenShadow?: boolean;
+};
+const BusinessAddressForm = (props?: BusinessAddressFormProps) => {
+  const { hiddenShadow } = props ?? {};
   const {
     control,
     formState: { isSubmitting },
   } = useFormContext<Business>();
   return (
-    <ContentBox title="Address" isLoading={isSubmitting}>
+    <ContentBox
+      title="Address"
+      isLoading={isSubmitting}
+      hiddenShadow={hiddenShadow}
+    >
       <div className="grid grid-cols-2 gap-4">
         <InputController
           control={control}
