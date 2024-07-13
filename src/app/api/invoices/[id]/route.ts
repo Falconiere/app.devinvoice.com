@@ -1,4 +1,8 @@
-import { getInvoiceById, updateInvoice } from "@/database/services/invoice";
+import {
+	deleteInvoice,
+	getInvoiceById,
+	updateInvoice,
+} from "@/database/services/invoice";
 import { invoiceZodSchema } from "@/database/services/invoice/types";
 import { apiMiddleware } from "@/utils/apiMiddleware";
 
@@ -8,7 +12,7 @@ export const PATCH = async (
 ) =>
 	apiMiddleware.patch(req, async (_, payload) => {
 		try {
-			const isValid = invoiceZodSchema.parse(payload);
+			const isValid = invoiceZodSchema.partial().parse(payload);
 			if (!isValid) {
 				return new Response(
 					JSON.stringify({ message: "error", error: isValid }),
@@ -46,6 +50,24 @@ export const GET = async (
 					status: 200,
 				},
 			);
+		} catch (error) {
+			return new Response(JSON.stringify({ message: "error", error }), {
+				status: 500,
+			});
+		}
+	});
+
+export const DELETE = async (
+	req: Request,
+	{ params }: { params: { id: string } },
+) =>
+	apiMiddleware.delete(req, async () => {
+		try {
+			const invoiceId = params.id;
+			await deleteInvoice(invoiceId);
+			return new Response(JSON.stringify({ message: "success" }), {
+				status: 200,
+			});
 		} catch (error) {
 			return new Response(JSON.stringify({ message: "error", error }), {
 				status: 500,

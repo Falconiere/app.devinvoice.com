@@ -22,14 +22,26 @@ const ROUTES = {
 			header: "New Invoice",
 		},
 		INVOICES_EDIT: {
+			path: "/invoices/$id/edit",
+			get: (id: string) => `/invoices/${id}/edit`,
+			match: (pathname: string) => {
+				const [uuid] = findUUIDSFromPathname(pathname);
+				if (uuid === undefined) return false;
+				return pathname === `/invoices/${uuid}/edit`;
+			},
+			title: "Invoice Edit",
+			header: "Invoice Edit",
+		},
+		INVOICES_PREVIEW: {
 			path: "/invoices/$id",
 			get: (id: string) => `/invoices/${id}`,
 			match: (pathname: string) => {
 				const [uuid] = findUUIDSFromPathname(pathname);
+				if (uuid === undefined) return false;
 				return pathname === `/invoices/${uuid}`;
 			},
-			title: "Invoices",
-			header: "Invoices",
+			title: "Invoice Preview",
+			header: "Invoices Preview",
 		},
 		CLIENTS: {
 			path: "/clients",
@@ -48,6 +60,7 @@ const ROUTES = {
 			get: (id: string) => `/clients/${id}`,
 			match: (pathname: string) => {
 				const [uuid] = findUUIDSFromPathname(pathname);
+				if (uuid === undefined) return false;
 				return pathname === `/clients/${uuid}`;
 			},
 			title: "Edit Client",
@@ -72,6 +85,18 @@ const ROUTES = {
 				pathname === ROUTES.PRIVATE.BUSINESS_SETTINGS.path,
 			title: "Business Settings",
 			header: "Business Settings",
+		},
+	},
+	PUBLIC: {
+		PDF: {
+			path: "/invoices/pdf/$id",
+			match: (pathname: string) => {
+				const [uuid] = findUUIDSFromPathname(pathname);
+				if (uuid === undefined) return false;
+				return pathname === `/invoices/pdf/${uuid}`;
+			},
+			title: "PDF Invoice",
+			header: "PDF Invoice",
 		},
 	},
 	AUTH: {

@@ -24,6 +24,7 @@ const useClientListColumnsController = (
       {
         id: "actions",
         enableHiding: false,
+        header: "Actions",
         cell: ({ row }) => {
           const client = row.original;
           if (!client?.id || hideActions) return null;

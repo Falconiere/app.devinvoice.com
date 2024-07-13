@@ -6,7 +6,16 @@ import type { Invoice } from "@/database/services/invoice/types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 
-const useInvoiceListColumnsController = () => {
+type UseInvoiceListColumnsController = {
+  onUpdate: (invoice: Invoice) => Promise<void>;
+  onDelete: (invoice: Invoice) => void;
+  onDuplicate: (invoice: Invoice) => Promise<void>;
+  isInvoiceLoading?: boolean;
+};
+const useInvoiceListColumnsController = (
+  options: UseInvoiceListColumnsController
+) => {
+  const { onUpdate, onDelete, onDuplicate } = options ?? {};
   const columns = useMemo<ColumnDef<Invoice>[]>(
     () => [
       {
@@ -58,11 +67,18 @@ const useInvoiceListColumnsController = () => {
         enableHiding: false,
         cell: ({ row }) => {
           const invoice = row.original;
-          return <InvoiceRowActions invoice={invoice} onDelete={() => {}} />;
+          return (
+            <InvoiceRowActions
+              invoice={invoice}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+              onDuplicate={onDuplicate}
+            />
+          );
         },
       },
     ],
-    []
+    [onDelete, onUpdate, onDuplicate]
   );
   return { columns };
 };

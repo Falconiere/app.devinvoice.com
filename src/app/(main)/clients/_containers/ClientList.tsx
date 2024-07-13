@@ -2,9 +2,8 @@
 import { useClientListController } from "@/app/(main)/clients/_controllers/useClientListController";
 import { DataTable } from "@/app/_components/DataTable";
 import { DeleteDialog } from "@/app/_components/DeleteDialog";
+import { useHeaderActions } from "@/app/_hooks/useHeaderActions";
 import { ROUTES } from "@/app/routes";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const ClientList = () => {
   const {
@@ -18,15 +17,16 @@ const ClientList = () => {
     onDelete,
   } = useClientListController();
 
+  useHeaderActions([
+    {
+      label: "New Client",
+      component: "link",
+      buttonVariant: "default",
+      href: ROUTES.PRIVATE.CLIENTS_ADD.path,
+    },
+  ]);
   return (
     <>
-      <div className="flex items-center justify-end gap-2">
-        <Button asChild>
-          <Link href={ROUTES.PRIVATE.CLIENTS_ADD.path} prefetch>
-            New Client
-          </Link>
-        </Button>
-      </div>
       <DataTable
         columns={columns}
         isLoading={isLoading}

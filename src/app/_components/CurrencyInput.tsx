@@ -6,7 +6,8 @@ import type { NumericFormatProps } from "react-number-format/types/types";
 
 export type CurrencyInputProps = NumericFormatProps<InputProps>;
 const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
-  (props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (props, _) => {
     return (
       <NumericFormat
         {...props}

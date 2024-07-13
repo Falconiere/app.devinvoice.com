@@ -17,12 +17,14 @@ export const invoiceItemZodSchema = createSelectSchema(invoiceItem)
 	.extend({
 		id: z.string().optional(),
 		quantity: z.number().gt(0),
-		// decimal 2
-		price: z.number().gt(0),
+		price: z
+			.number()
+			.or(z.string())
+			.refine((value) => Number.parseFloat(value.toString()) > 0, {}),
 		description: z
 			.string()
 			.min(3, { message: "Description must be at least 3 characters" }),
-		invoiceId: z.string(),
+		invoiceId: z.string().or(z.string().uuid()).or(z.undefined()).optional(),
 	});
 export const invoiceZodSchema = createSelectSchema(invoice)
 	.extend({
@@ -49,6 +51,7 @@ export const invoiceZodSchema = createSelectSchema(invoice)
 
 export type InvoiceStatus = z.infer<typeof invoiceStatusZodSchema>;
 export type InvoiceItem = InferInsertModel<typeof invoiceItem>;
+export type InvoiceItemPayload = z.infer<typeof invoiceItemZodSchema>;
 export type Invoice = InferInsertModel<typeof invoice> & {
 	items: InvoiceItem[];
 	client?: z.infer<typeof clientZodSchema>;

@@ -5,7 +5,7 @@ const headers = {
 };
 
 const throwErrorMessage = async (response: Response) => {
-	const result = await response.json();
+	const result = (await response?.json?.()) || {};
 	const responseError = {
 		type: "Error",
 		message: result.message || "Something went wrong",
@@ -39,7 +39,7 @@ const mutate = async <TData, TPayload>(
 };
 
 const query = async <TData>(
-	method: "GET" | "DELETE",
+	method: "GET",
 	url: string,
 ): Promise<{ data?: TData; message: string } | undefined> => {
 	const token = await getCurrentToken();
@@ -56,9 +56,23 @@ const query = async <TData>(
 	return throwErrorMessage(response);
 };
 
+const destroy = async (method: "DELETE", url: string): Promise<void> => {
+	const token = await getCurrentToken();
+	const response = await fetch(url, {
+		method,
+		headers: {
+			...headers,
+			Authorization: token,
+		},
+	});
+	if (!response.ok) {
+		return throwErrorMessage(response);
+	}
+};
+
 const http = {
 	get: async <TData>(url: string) => query<TData>("GET", url),
-	delete: async <TData>(url: string) => query<TData>("DELETE", url),
+	delete: async (url: string) => destroy("DELETE", url),
 	patch: async <TData, TPayload>(url: string, payload: TPayload) =>
 		mutate<TData, TPayload>("PATCH", url, payload),
 	post: async <TData, TPayload>(url: string, payload: TPayload) =>

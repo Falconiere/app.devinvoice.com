@@ -11,7 +11,7 @@ import {
 type DeleteDialogProps = {
   open: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  onDelete: () => Promise<void> | void;
 };
 const DeleteDialog = ({ open, onClose, onDelete }: DeleteDialogProps) => {
   return (

@@ -17,6 +17,7 @@ import {
   NumericController,
   TextareaController,
 } from "@/app/_components/forms";
+import { useHeaderActions } from "@/app/_hooks/useHeaderActions";
 
 import { toMoney } from "@/app/_utils/toMoney";
 import { Button } from "@/components/ui/button";
@@ -50,12 +51,30 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
     onToggleEditBusiness,
     onToggleEditClient,
   } = useInvoiceFormController({ invoice });
+  useHeaderActions(
+    !invoice
+      ? [
+          {
+            label: "Save as Draft",
+            component: "button",
+            buttonVariant: "default",
+            onClick: () => {
+              const btn = document.getElementById(
+                "submit-invoice"
+              ) as HTMLButtonElement;
+              btn?.click();
+            },
+          },
+        ]
+      : []
+  );
 
   return (
     <>
       <form
         className="rounded-sm overflow-hidden shadow-md bg-white relative p-4 grid gap-4"
         onSubmit={onSubmit}
+        id="invoice-form"
       >
         <div className="flex justify-between gap-4">
           <InputController
@@ -95,16 +114,7 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
           <BillBasicInfo
             title="Bill From"
             name={currentBusiness?.name}
-            address={
-              currentBusiness &&
-              formatAddress({
-                addressLine1: currentBusiness?.addressLine1,
-                addressLine2: currentBusiness?.addressLine2,
-                city: currentBusiness?.city,
-                state: currentBusiness?.state,
-                country: currentBusiness?.country,
-              })
-            }
+            address={formatAddress(currentBusiness)}
             country={currentBusiness?.country}
             email={currentBusiness?.email}
             phone={currentBusiness?.phone}
@@ -117,16 +127,7 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
               <BillBasicInfo
                 title="Bill To"
                 name={currentClient?.name}
-                address={
-                  currentClient &&
-                  formatAddress({
-                    addressLine1: currentClient?.addressLine1,
-                    addressLine2: currentClient?.addressLine2,
-                    city: currentClient?.city,
-                    state: currentClient?.state,
-                    country: currentClient?.country,
-                  })
-                }
+                address={formatAddress(currentClient)}
                 country={currentClient?.country}
                 email={currentClient?.email}
                 phone={currentClient?.phone}
@@ -138,11 +139,12 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
           />
         </div>
         <hr />
-        <div className="grid grid-cols-[auto,150px,150px,150px] gap-4">
+        <div className="grid grid-cols-[auto,150px,150px,150px,max-content] gap-4">
           <span>Item/Task</span>
           <span>Quantity</span>
           <span>price</span>
           <span>Amount</span>
+          <span className="p-0 w-8 h-8" />
         </div>
         <div className="grid grid-cols-[auto,150px,150px,150px,max-content] gap-4 items-start">
           {items.map((_, idx) => (
@@ -161,16 +163,16 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
                 name={`items.${idx}.price`}
               />
               <CurrencyInput prefix="$" value={getAmount(idx)} readOnly />
-              {items.length > 1 && (
-                <Button
-                  variant="ghost"
-                  className="text-red-500 p-0 w-8 h-8"
-                  onClick={() => onRemoveItem(idx)}
-                  type="button"
-                >
-                  <TrashIcon />
-                </Button>
-              )}
+
+              <Button
+                variant="ghost"
+                className="hover:text-red-500 p-0 w-8 h-8"
+                onClick={() => onRemoveItem(idx)}
+                type="button"
+                disabled={items.length === 1}
+              >
+                <TrashIcon />
+              </Button>
             </Fragment>
           ))}
         </div>
@@ -195,16 +197,18 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
         </div>
         <hr />
         <div className="flex justify-end">
-          <Button disabled={isSaving}>
+          <Button disabled={isSaving} id="submit-invoice">
             {isSaving ? "Saving..." : "Save Invoice"}
           </Button>
         </div>
       </form>
-      <ClientListModal
-        open={isSelectClientOpen}
-        onClose={() => setIsSelectClientOpen(false)}
-        onSelect={onSelectClient}
-      />
+      {isSelectClientOpen && (
+        <ClientListModal
+          open={isSelectClientOpen}
+          onClose={() => setIsSelectClientOpen(false)}
+          onSelect={onSelectClient}
+        />
+      )}
       {currentClient && (
         <ClientFormModal
           open={isClientFormOpen}

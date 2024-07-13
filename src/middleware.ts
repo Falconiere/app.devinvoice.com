@@ -2,16 +2,22 @@ import { ROUTES } from "@/app/routes";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route.path);
-const AUTH = Object.values(ROUTES.AUTH).map((route) => route.path);
+const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route);
+const PUBLIC = Object.values(ROUTES.PUBLIC).map((route) => route);
+console.log({ PUBLIC });
+const AUTH = Object.values(ROUTES.AUTH).map((route) => route);
 
 const checkIfPrivate = (pathname: string) => {
 	for (const route of PRIVATE) {
-		if (
-			pathname.startsWith(route) ||
-			pathname === route ||
-			route.match(pathname)
-		) {
+		if (route.match(pathname)) {
+			return true;
+		}
+	}
+};
+
+const checkIfPublic = (pathname: string) => {
+	for (const route of PUBLIC) {
+		if (route?.match(pathname)) {
 			return true;
 		}
 	}
@@ -20,6 +26,11 @@ const checkIfPrivate = (pathname: string) => {
 export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
 	const pathname = req.nextUrl.pathname;
+
+	if (checkIfPublic(pathname)) {
+		return res;
+	}
+
 	// Create a Supabase client configured to use cookies
 	const supabase = createMiddlewareClient({ req, res });
 	// Refresh session if expired - required for Server Components

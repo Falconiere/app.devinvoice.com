@@ -58,7 +58,7 @@ const useInvoiceFormController = ({
 	const fillForm = useCallback(() => {
 		for (const key in invoice) {
 			const formKey = key as keyof InvoicePayload;
-			setValue(formKey, (invoice as InvoicePayload)[formKey]);
+			setValue(formKey, invoice[formKey]);
 			if (formKey === "items") {
 				invoice[formKey].forEach((item, index) => {
 					setValue(`items.${index}.description`, item.description ?? "");
@@ -69,11 +69,14 @@ const useInvoiceFormController = ({
 			if (formKey === "date" || formKey === "dueDate") {
 				setValue(formKey, new Date(`${invoice[formKey]} EDT`));
 			}
-			if (formKey === "client" && invoice.client)
+			if (formKey === "client" && invoice.client) {
 				setCurrentClientId(invoice.client?.id);
-			refetchClient();
-			if (formKey === "business" && invoice.business)
+				refetchClient();
+			}
+
+			if (formKey === "business" && invoice.business) {
 				setCurrentBusiness(invoice.business as Business);
+			}
 		}
 	}, [invoice, refetchClient, setValue]);
 
@@ -119,7 +122,7 @@ const useInvoiceFormController = ({
 			});
 
 			if (savedInvoice?.data?.id)
-				replace(ROUTES.PRIVATE.INVOICES_EDIT.get(savedInvoice.data.id));
+				replace(ROUTES.PRIVATE.INVOICES_PREVIEW.get(savedInvoice.data.id));
 		} catch {
 			toast({
 				title: "Error!",
@@ -134,7 +137,7 @@ const useInvoiceFormController = ({
 		return items.reduce((acc, item) => {
 			const quantity = item.quantity ?? 0;
 			const price = item.price ?? 0;
-			return acc + quantity * price;
+			return acc + quantity * Number(price);
 		}, 0);
 	}, [items]);
 
@@ -152,7 +155,7 @@ const useInvoiceFormController = ({
 		const item = items[idx];
 		const quantity = item?.quantity ?? 0;
 		const price = item?.price ?? 0;
-		return quantity * price;
+		return quantity * Number(price);
 	};
 
 	return {

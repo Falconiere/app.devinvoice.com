@@ -1,10 +1,9 @@
 import type { Business } from "@/database/services/business/types";
+import type { Client } from "@/database/services/client/types";
 
-type Address = Pick<
-	Business,
-	"addressLine1" | "addressLine2" | "city" | "country" | "state"
->;
-const formatAddress = (address: Address) => {
+type Source = Partial<Business> | Partial<Client>;
+const formatAddress = (address?: Source) => {
+	if (!address) return "";
 	const arr = [
 		address.addressLine1,
 		address.addressLine2,

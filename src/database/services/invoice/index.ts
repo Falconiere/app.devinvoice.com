@@ -21,6 +21,8 @@ const createInvoice = async (payload: InvoicePayload) => {
 		dueDate: payload.dueDate,
 		description: payload.description,
 		notes: payload.notes,
+		currency: payload.currency,
+		status: payload.status,
 	} as Invoice;
 
 	const [savedInvoice] = await db
@@ -57,6 +59,7 @@ const updateInvoice = async (id: string, payload: InvoicePayload) => {
 		description: payload.description,
 		notes: payload.notes,
 		currency: payload.currency,
+		status: payload.status,
 	} as Invoice;
 
 	await db
@@ -69,12 +72,13 @@ const updateInvoice = async (id: string, payload: InvoicePayload) => {
 		...item,
 		invoiceId: id,
 	}));
-
-	await db.delete(invoiceItem).where(eq(invoiceItem.invoiceId, id)).execute();
-	await db
-		.insert(invoiceItem)
-		.values(items as unknown as InvoiceItem[])
-		.execute();
+	if (items.length > 0) {
+		await db.delete(invoiceItem).where(eq(invoiceItem.invoiceId, id)).execute();
+		await db
+			.insert(invoiceItem)
+			.values(items as unknown as InvoiceItem[])
+			.execute();
+	}
 
 	const result = await db.query.invoice.findFirst({
 		where: eq(invoice.id, id),
@@ -126,10 +130,14 @@ const getInvoicePaginated: GetQueryPaginated<Invoice> = async ({
 	});
 };
 
+const deleteInvoice = async (id: string) => {
+	await db.delete(invoice).where(eq(invoice.id, id)).execute();
+};
 export {
 	createInvoice,
 	deleteInvoiceItem,
 	updateInvoice,
 	getInvoiceById,
 	getInvoicePaginated,
+	deleteInvoice,
 };

@@ -10,13 +10,14 @@ const useInvoiceSave = (id?: string) => {
 	return useMutation({
 		mutationKey: ["invoices", !id ? "save" : `update-${id}`],
 		mutationFn: async (invoice: InvoicePayload) => {
-			const response = !id
+			const currentId = id ?? invoice.id;
+			const response = !currentId
 				? await http.post<Invoice, InvoicePayload>(
 						apiRoute.invoices.post,
 						invoice,
 					)
-				: await http.patch<Invoice, InvoicePayload>(
-						apiRoute.invoices.patch(id),
+				: await http.patch<Invoice, Partial<InvoicePayload>>(
+						apiRoute.invoices.patch(currentId),
 						invoice,
 					);
 			return response;
