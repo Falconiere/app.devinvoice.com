@@ -1,4 +1,3 @@
-import { apiRoute } from "@/app/_utils/apiRoute";
 import { db } from "@/database/db";
 import { invoice } from "@/database/schemas/invoice";
 import { invoiceItem } from "@/database/schemas/invoiceItem";
@@ -9,6 +8,7 @@ import type {
 } from "@/database/services/invoice/types";
 import type { GetQueryPaginated } from "@/database/services/types";
 import { buildPaginationResponse } from "@/database/utils/buildPaginationResponse";
+import { apiRoute } from "@/domains/_utils/apiRoute";
 
 import { count, desc, eq } from "drizzle-orm";
 

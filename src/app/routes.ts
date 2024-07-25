@@ -1,4 +1,4 @@
-import { findUUIDSFromPathname } from "@/app/_utils/findUUIDFromPathname";
+import { findUUIDSFromPathname } from "@/domains/_utils/findUUIDFromPathname";
 
 const ROUTES = {
 	PRIVATE: {
@@ -103,10 +103,12 @@ const ROUTES = {
 		LOGIN: {
 			path: "/auth/login",
 			title: "Login",
+			match: (pathname: string) => pathname === ROUTES.AUTH.LOGIN.path,
 		},
 		REGISTER: {
 			path: "/auth/sign-up",
 			title: "Register",
+			match: (pathname: string) => pathname === ROUTES.AUTH.REGISTER.path,
 		},
 	},
 } as const;

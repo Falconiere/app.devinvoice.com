@@ -1,13 +1,12 @@
 "use client";
 import { useInvoiceListController } from "@/app/(main)/invoices/_controllers/useInvoiceListController";
-
-import { DataTable } from "@/app/_components/DataTable";
-import { DeleteDialog } from "@/app/_components/DeleteDialog";
-import { useHeaderActions } from "@/app/_hooks/useHeaderActions";
 import { ROUTES } from "@/app/routes";
 
-import { EmptyDataState } from "@/app/_components/EmptyDataState";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DataTable } from "@/domains/_components/DataTable";
+import { DeleteDialog } from "@/domains/_components/DeleteDialog";
+import { EmptyDataState } from "@/domains/_components/EmptyDataState";
+import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
 
 const InvoicesList = () => {
   useHeaderActions([

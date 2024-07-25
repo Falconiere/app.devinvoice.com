@@ -1,6 +1,3 @@
-import { useClient } from "@/app/_queries/client/useClient";
-import { useClientSave } from "@/app/_queries/client/useClientSave";
-
 import { useToast } from "@/components/ui/use-toast";
 
 import {
@@ -8,6 +5,8 @@ import {
 	type ClientPayload,
 	clientZodSchema,
 } from "@/database/services/client/types";
+import { useClient } from "@/domains/_queries/client/useClient";
+import { useClientSave } from "@/domains/_queries/client/useClientSave";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+import notfound from "@/app/_assets/illustrations/404.svg";
+import Image from "next/image";
 const NotFound = () => {
   return (
     <div className="flex items-center justify-center h-screen w-screen">
       <div className="text-center grid gap-2">
-        <h1 className="font-extrabold">404 - Not Found!</h1>
-        <p>Sorry, the page you are looking for does not exist.</p>
+        <Image src={notfound} alt="Not Found" />
         <Link href="/dashboard">
           <Button>Go Back</Button>
         </Link>

@@ -1,6 +1,4 @@
 import { useClientFormController } from "@/app/(main)/clients/_controllers/useClientFormController";
-import { Divider } from "@/app/_components/Divider";
-import { ComboBoxController, InputController } from "@/app/_components/forms";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { countryInputOptions } from "@/data/countries";
 import type { Client } from "@/database/services/client/types";
+import { Divider } from "@/domains/_components/Divider";
+import {
+  ComboBoxController,
+  InputController,
+} from "@/domains/_components/forms";
 
 type ClientFormModalProps = {
   open: boolean;

@@ -1,12 +1,12 @@
 import { useInvoiceListColumnsController } from "@/app/(main)/invoices/_controllers/useInvoiceListColumnsController";
 import { parseInvoicePayload } from "@/app/(main)/invoices/_utils/parseInvoicePayload";
-import { useInvoicePaginated } from "@/app/_queries/invoice/useInvoicePaginated";
-import { useInvoiceSave } from "@/app/_queries/invoice/useInvoiceSave";
-import { apiRoute } from "@/app/_utils/apiRoute";
-import { http } from "@/app/_utils/http";
 import { ROUTES } from "@/app/routes";
 import { useToast } from "@/components/ui/use-toast";
 import type { Invoice } from "@/database/services/invoice/types";
+import { useInvoicePaginated } from "@/domains/_queries/invoice/useInvoicePaginated";
+import { useInvoiceSave } from "@/domains/_queries/invoice/useInvoiceSave";
+import { apiRoute } from "@/domains/_utils/apiRoute";
+import { http } from "@/domains/_utils/http";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const useInvoiceListController = () => {

@@ -1,6 +1,5 @@
 import { useBusinessFormController } from "@/app/(main)/settings/business/_controllers/useBusinessFormController";
-import { Divider } from "@/app/_components/Divider";
-import { ComboBoxController, InputController } from "@/app/_components/forms";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +8,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { countryInputOptions } from "@/data/countries";
+import { Divider } from "@/domains/_components/Divider";
+import {
+  ComboBoxController,
+  InputController,
+} from "@/domains/_components/forms";
 
 type BusinessFormModalProps = {
   open: boolean;

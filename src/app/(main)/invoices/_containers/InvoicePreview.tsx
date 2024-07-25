@@ -1,8 +1,8 @@
 import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
-import { Divider } from "@/app/_components/Divider";
-import { toMoney } from "@/app/_utils/toMoney";
 import { getInvoiceById } from "@/database/services/invoice";
 import { getUserById } from "@/database/services/user";
+import { Divider } from "@/domains/_components/Divider";
+import { toMoney } from "@/domains/_utils/toMoney";
 import { format } from "date-fns";
 import { Fragment, use } from "react";
 

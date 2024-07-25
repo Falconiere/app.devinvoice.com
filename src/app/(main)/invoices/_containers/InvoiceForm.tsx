@@ -7,8 +7,10 @@ import { useInvoiceFormController } from "@/app/(main)/invoices/_controllers/use
 import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
 import { BusinessFormModal } from "@/app/(main)/settings/business/_containers/BusinessFormModal";
 
-import { CurrencyInput } from "@/app/_components/CurrencyInput";
-
+import { Button } from "@/components/ui/button";
+import { currenciesInputOptions } from "@/data/currencies";
+import type { Invoice } from "@/database/services/invoice/types";
+import { CurrencyInput } from "@/domains/_components/CurrencyInput";
 import {
   ComboBoxController,
   CurrencyController,
@@ -16,13 +18,9 @@ import {
   InputController,
   NumericController,
   TextareaController,
-} from "@/app/_components/forms";
-import { useHeaderActions } from "@/app/_hooks/useHeaderActions";
-
-import { toMoney } from "@/app/_utils/toMoney";
-import { Button } from "@/components/ui/button";
-import { currenciesInputOptions } from "@/data/currencies";
-import type { Invoice } from "@/database/services/invoice/types";
+} from "@/domains/_components/forms";
+import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
+import { toMoney } from "@/domains/_utils/toMoney";
 
 import { TrashIcon } from "lucide-react";
 import { Fragment } from "react";
@@ -163,7 +161,6 @@ const InvoiceForm = ({ invoice }: InvoiceFormProps) => {
                 name={`items.${idx}.price`}
               />
               <CurrencyInput prefix="$" value={getAmount(idx)} readOnly />
-
               <Button
                 variant="ghost"
                 className="hover:text-red-500 p-0 w-8 h-8"

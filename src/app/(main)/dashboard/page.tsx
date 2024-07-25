@@ -1,4 +1,4 @@
-import { EmptyDataState } from "@/app/_components/EmptyDataState";
+import { EmptyDataState } from "@/domains/_components/EmptyDataState";
 
 //src/app/dashboard/page.tsx
 const DashboardPage = () => {

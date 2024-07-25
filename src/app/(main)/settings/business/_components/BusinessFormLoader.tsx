@@ -1,4 +1,4 @@
-import { ContentBox } from "@/app/_components/ContentBox";
+import { ContentBox } from "@/domains/_components/ContentBox";
 
 const BusinessFormLoader = () => (
   <ContentBox isLoading>

@@ -1,7 +1,8 @@
 import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
-import { toMoney } from "@/app/_utils/toMoney";
+
 import { getInvoiceById } from "@/database/services/invoice";
 import { getUserById } from "@/database/services/user";
+import { toMoney } from "@/domains/_utils/toMoney";
 import { format } from "date-fns";
 import Script from "next/script";
 import { Fragment, use } from "react";

@@ -1,6 +1,3 @@
-import { useClient } from "@/app/_queries/client/useClient";
-import { useInvoiceSave } from "@/app/_queries/invoice/useInvoiceSave";
-import { useUserProfile } from "@/app/_queries/user/useUserProfile";
 import { ROUTES } from "@/app/routes";
 import { useToast } from "@/components/ui/use-toast";
 import type { Business } from "@/database/services/business/types";
@@ -12,6 +9,9 @@ import {
 	type InvoicePayload,
 	invoiceZodSchema,
 } from "@/database/services/invoice/types";
+import { useClient } from "@/domains/_queries/client/useClient";
+import { useInvoiceSave } from "@/domains/_queries/invoice/useInvoiceSave";
+import { useUserProfile } from "@/domains/_queries/user/useUserProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";

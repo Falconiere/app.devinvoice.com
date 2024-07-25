@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 const PRIVATE = Object.values(ROUTES.PRIVATE).map((route) => route);
 const PUBLIC = Object.values(ROUTES.PUBLIC).map((route) => route);
-console.log({ PUBLIC });
+
 const AUTH = Object.values(ROUTES.AUTH).map((route) => route);
 
 const checkIfPrivate = (pathname: string) => {
@@ -23,6 +23,13 @@ const checkIfPublic = (pathname: string) => {
 	}
 };
 
+const checkIfAuth = (pathname: string) => {
+	for (const route of AUTH) {
+		if (route.match(pathname)) {
+			return true;
+		}
+	}
+};
 export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
 	const pathname = req.nextUrl.pathname;
@@ -41,10 +48,9 @@ export async function middleware(req: NextRequest) {
 	if (checkIfPrivate(pathname) && !user) {
 		return Response.redirect(new URL(ROUTES.AUTH.LOGIN.path, req.url));
 	}
-	if (AUTH.includes(pathname as never) && user) {
+	if (checkIfAuth(pathname) && user) {
 		return Response.redirect(new URL(ROUTES.PRIVATE.DASHBOARD.path, req.url));
 	}
-
 	return res;
 }
 

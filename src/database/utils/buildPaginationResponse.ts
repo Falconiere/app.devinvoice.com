@@ -1,4 +1,4 @@
-import { toUrlQuery } from "@/app/_utils/toUrlQuery";
+import { toUrlQuery } from "@/domains/_utils/toUrlQuery";
 
 type BuildPagination<T> = {
 	total: number;

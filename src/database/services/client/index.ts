@@ -1,9 +1,9 @@
-import { apiRoute } from "@/app/_utils/apiRoute";
 import { db } from "@/database/db";
 import { client } from "@/database/schemas/client";
 import type { Client } from "@/database/services/client/types";
 import type { GetQueryPaginated } from "@/database/services/types";
 import { buildPaginationResponse } from "@/database/utils/buildPaginationResponse";
+import { apiRoute } from "@/domains/_utils/apiRoute";
 import { count, desc, eq } from "drizzle-orm";
 
 const createClient = async (values: Client) => {

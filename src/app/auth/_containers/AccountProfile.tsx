@@ -1,10 +1,14 @@
 "use client";
 import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_controllers/useAccountDetailsFormController";
-import { ComboBoxController, InputController } from "@/app/_components/forms";
+
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
 import { countryInputOptions } from "@/data/countries";
 import type { UserProfile } from "@/database/services/user/types";
+import {
+  ComboBoxController,
+  InputController,
+} from "@/domains/_components/forms";
 
 const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onNext } = useSignUpDialogCtx();

@@ -1,13 +1,13 @@
 "use client";
 
-import { useUserProfile } from "@/app/_queries/user/useUserProfile";
-import { useUserSave } from "@/app/_queries/user/useUserSave";
 import { useToast } from "@/components/ui/use-toast";
 import {
 	type UpdateUserProfile,
 	type UserProfile,
 	updateUserZodSchema,
 } from "@/database/services/user/types";
+import { useUserProfile } from "@/domains/_queries/user/useUserProfile";
+import { useUserSave } from "@/domains/_queries/user/useUserSave";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";

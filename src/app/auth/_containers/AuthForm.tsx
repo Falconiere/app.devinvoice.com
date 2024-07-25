@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { AuthFormFooter } from "../_components/AuthFormFooter";
+import type { AuthApiError } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type { AuthApiError } from "@supabase/supabase-js";
+import { useForm } from "react-hook-form";
+import { AuthFormFooter } from "../_components/AuthFormFooter";
 
 type AuthFormProps = {
   type: "login" | "sign-up" | "forgot-password";

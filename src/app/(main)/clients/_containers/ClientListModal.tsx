@@ -1,7 +1,4 @@
 import { useClientListColumnsController } from "@/app/(main)/clients/_controllers/useClientListColumnsController";
-import { DataTable } from "@/app/_components/DataTable";
-import { Divider } from "@/app/_components/Divider";
-import { useClientPaginated } from "@/app/_queries/client/useClientPaginated";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +6,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { Client } from "@/database/services/client/types";
+import { DataTable } from "@/domains/_components/DataTable";
+import { Divider } from "@/domains/_components/Divider";
+import { useClientPaginated } from "@/domains/_queries/client/useClientPaginated";
 
 type ClientListModalProps = {
   open: boolean;

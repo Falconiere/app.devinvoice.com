@@ -1,5 +1,6 @@
 "use client";
-import { useHeaderActions } from "@/app/_hooks/useHeaderActions";
+
+import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
 import generatePDF, { Margin, type Options } from "react-to-pdf";
 const options: Options = {
   filename: "invoice.pdf",
