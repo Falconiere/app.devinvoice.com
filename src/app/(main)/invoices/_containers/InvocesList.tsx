@@ -3,10 +3,10 @@ import { useInvoiceListController } from "@/app/(main)/invoices/_controllers/use
 import { ROUTES } from "@/app/routes";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DataTable } from "@/domains/_components/DataTable";
-import { DeleteDialog } from "@/domains/_components/DeleteDialog";
-import { EmptyDataState } from "@/domains/_components/EmptyDataState";
-import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
+import { DataTable } from "@/domains/components/DataTable";
+import { DeleteDialog } from "@/domains/components/DeleteDialog";
+import { EmptyDataState } from "@/domains/components/EmptyDataState";
+import { useHeaderActions } from "@/domains/hooks/useHeaderActions";
 
 const InvoicesList = () => {
   useHeaderActions([
@@ -17,6 +17,7 @@ const InvoicesList = () => {
       href: ROUTES.PRIVATE.INVOICES_ADD.path,
     },
   ]);
+
   const {
     columns,
     data,
@@ -25,6 +26,7 @@ const InvoicesList = () => {
     onCloseDeleteDialog,
     onDelete,
   } = useInvoiceListController();
+
   return (
     <>
       <Tabs defaultValue="all" className="w-full">

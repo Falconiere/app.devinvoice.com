@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-import notfound from "@/app/_assets/illustrations/404.svg";
+import notfound from "@/domains/assets/illustrations/404.svg";
 import Image from "next/image";
 const NotFound = () => {
   return (

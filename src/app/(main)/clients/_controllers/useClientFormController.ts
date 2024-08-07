@@ -5,8 +5,8 @@ import {
 	type ClientPayload,
 	clientZodSchema,
 } from "@/database/services/client/types";
-import { useClient } from "@/domains/_queries/client/useClient";
-import { useClientSave } from "@/domains/_queries/client/useClientSave";
+import { useClient } from "@/domains/queries/client/useClient";
+import { useClientSave } from "@/domains/queries/client/useClientSave";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

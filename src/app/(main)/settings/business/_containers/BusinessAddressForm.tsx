@@ -3,11 +3,11 @@
 import { countryInputOptions } from "@/data/countries";
 
 import type { Business } from "@/database/services/business/types";
-import { ContentBox } from "@/domains/_components/ContentBox";
+import { ContentBox } from "@/domains/components/ContentBox";
 import {
   ComboBoxController,
   InputController,
-} from "@/domains/_components/forms";
+} from "@/domains/components/forms";
 
 import { useFormContext } from "react-hook-form";
 

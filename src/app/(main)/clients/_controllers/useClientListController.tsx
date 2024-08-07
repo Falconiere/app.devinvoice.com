@@ -1,8 +1,8 @@
 import { useClientListColumnsController } from "@/app/(main)/clients/_controllers/useClientListColumnsController";
 import { useToast } from "@/components/ui/use-toast";
-import { useClientPaginated } from "@/domains/_queries/client/useClientPaginated";
-import { apiRoute } from "@/domains/_utils/apiRoute";
-import { http } from "@/domains/_utils/http";
+import { useClientPaginated } from "@/domains/queries/client/useClientPaginated";
+import { apiRoute } from "@/domains/utils/apiRoute";
+import { http } from "@/domains/utils/http";
 import { useState } from "react";
 
 const useClientListController = () => {

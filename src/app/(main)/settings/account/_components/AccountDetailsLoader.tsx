@@ -1,4 +1,4 @@
-import { ContentBox } from "@/domains/_components/ContentBox";
+import { ContentBox } from "@/domains/components/ContentBox";
 
 const AccountDetailsLoader = () => (
   <ContentBox title="Account details" isLoading>

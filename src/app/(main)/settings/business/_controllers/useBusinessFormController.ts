@@ -5,8 +5,8 @@ import {
 	type Business,
 	businessZodSchema,
 } from "@/database/services/business/types";
-import { useBusinessSave } from "@/domains/_queries/business/useBusinessSave";
-import { useUserProfile } from "@/domains/_queries/user/useUserProfile";
+import { useBusinessSave } from "@/domains/queries/business/useBusinessSave";
+import { useUserProfile } from "@/domains/queries/user/useUserProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

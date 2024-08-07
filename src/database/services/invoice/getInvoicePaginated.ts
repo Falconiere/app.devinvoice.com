@@ -3,7 +3,7 @@ import { invoice } from "@/database/schemas/invoice";
 import type { Invoice } from "@/database/services/invoice/types";
 import type { GetQueryPaginated } from "@/database/services/types";
 import { buildPaginationResponse } from "@/database/utils/buildPaginationResponse";
-import { apiRoute } from "@/domains/_utils/apiRoute";
+import { apiRoute } from "@/domains/utils/apiRoute";
 import { count, desc, eq } from "drizzle-orm";
 
 const getInvoicePaginated: GetQueryPaginated<Invoice> = async ({

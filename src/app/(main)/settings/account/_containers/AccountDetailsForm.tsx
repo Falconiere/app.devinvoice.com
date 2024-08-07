@@ -4,11 +4,11 @@ import { useAccountDetailsFormController } from "@/app/(main)/settings/account/_
 import { Button } from "@/components/ui/button";
 import { countryInputOptions } from "@/data/countries";
 import type { UserProfile } from "@/database/services/user/types";
-import { ContentBox } from "@/domains/_components/ContentBox";
+import { ContentBox } from "@/domains/components/ContentBox";
 import {
   ComboBoxController,
   InputController,
-} from "@/domains/_components/forms";
+} from "@/domains/components/forms";
 
 const AccountDetailsForm: React.FC<{ currentUser?: UserProfile }> = ({
   currentUser,

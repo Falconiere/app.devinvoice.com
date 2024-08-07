@@ -10,7 +10,7 @@ import { BusinessFormModal } from "@/app/(main)/settings/business/_containers/Bu
 import { Button } from "@/components/ui/button";
 import { currenciesInputOptions } from "@/data/currencies";
 import type { Invoice } from "@/database/services/invoice/types";
-import { CurrencyInput } from "@/domains/_components/CurrencyInput";
+import { CurrencyInput } from "@/domains/components/CurrencyInput";
 import {
   ComboBoxController,
   CurrencyController,
@@ -18,9 +18,9 @@ import {
   InputController,
   NumericController,
   TextareaController,
-} from "@/domains/_components/forms";
-import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
-import { toMoney } from "@/domains/_utils/toMoney";
+} from "@/domains/components/forms";
+import { useHeaderActions } from "@/domains/hooks/useHeaderActions";
+import { toMoney } from "@/domains/utils/toMoney";
 
 import { TrashIcon } from "lucide-react";
 import { Fragment } from "react";

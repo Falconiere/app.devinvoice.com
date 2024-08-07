@@ -1,6 +1,6 @@
-import { SignUpOnboarding } from "@/domains/_containers/SignUpOnboarding";
-import { MainLayout } from "@/domains/_layouts/MainLayout";
-import { QueryProvider } from "@/domains/_providers/QueryProvider";
+import { SignUpOnboarding } from "@/app/auth/_containers/SignUpOnboarding";
+import { MainLayout } from "@/domains/layouts/MainLayout";
+import { QueryProvider } from "@/domains/providers/QueryProvider";
 
 type LayoutProps = {
   children: React.ReactNode;

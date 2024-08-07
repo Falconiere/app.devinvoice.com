@@ -2,7 +2,7 @@ import { formatAddress } from "@/app/(main)/invoices/_utils/formatAddress";
 
 import { getInvoiceById } from "@/database/services/invoice";
 import { getUserById } from "@/database/services/user";
-import { toMoney } from "@/domains/_utils/toMoney";
+import { toMoney } from "@/domains/utils/toMoney";
 import { format } from "date-fns";
 import Script from "next/script";
 import { Fragment, use } from "react";
@@ -24,6 +24,7 @@ const PDFView = ({ searchParams }: PDFViewProps) => {
       (acc, item) => acc + Number(item.price) * Number(item.price),
       0
     ) ?? 0;
+
   return (
     <>
       <div

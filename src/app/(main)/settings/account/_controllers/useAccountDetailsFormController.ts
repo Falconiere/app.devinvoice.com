@@ -6,8 +6,8 @@ import {
 	type UserProfile,
 	updateUserZodSchema,
 } from "@/database/services/user/types";
-import { useUserProfile } from "@/domains/_queries/user/useUserProfile";
-import { useUserSave } from "@/domains/_queries/user/useUserSave";
+import { useUserProfile } from "@/domains/queries/user/useUserProfile";
+import { useUserSave } from "@/domains/queries/user/useUserSave";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";

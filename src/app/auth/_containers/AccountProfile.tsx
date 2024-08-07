@@ -8,7 +8,7 @@ import type { UserProfile } from "@/database/services/user/types";
 import {
   ComboBoxController,
   InputController,
-} from "@/domains/_components/forms";
+} from "@/domains/components/forms";
 
 const AccountProfile = ({ currentUser }: { currentUser?: UserProfile }) => {
   const { onNext } = useSignUpDialogCtx();

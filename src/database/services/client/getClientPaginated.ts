@@ -3,7 +3,7 @@ import { client } from "@/database/schemas/client";
 import type { Client } from "@/database/services/client/types";
 import type { GetQueryPaginated } from "@/database/services/types";
 import { buildPaginationResponse } from "@/database/utils/buildPaginationResponse";
-import { apiRoute } from "@/domains/_utils/apiRoute";
+import { apiRoute } from "@/domains/utils/apiRoute";
 import { count, desc, eq } from "drizzle-orm";
 
 const getClientPaginated: GetQueryPaginated<Client> = async ({

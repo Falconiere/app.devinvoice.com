@@ -1,8 +1,8 @@
 "use client";
 
 import type { Business } from "@/database/services/business/types";
-import { ContentBox } from "@/domains/_components/ContentBox";
-import { InputController } from "@/domains/_components/forms";
+import { ContentBox } from "@/domains/components/ContentBox";
+import { InputController } from "@/domains/components/forms";
 
 import { useFormContext } from "react-hook-form";
 

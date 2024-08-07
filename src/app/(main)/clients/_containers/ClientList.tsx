@@ -2,9 +2,9 @@
 import { useClientListController } from "@/app/(main)/clients/_controllers/useClientListController";
 
 import { ROUTES } from "@/app/routes";
-import { DataTable } from "@/domains/_components/DataTable";
-import { DeleteDialog } from "@/domains/_components/DeleteDialog";
-import { useHeaderActions } from "@/domains/_hooks/useHeaderActions";
+import { DataTable } from "@/domains/components/DataTable";
+import { DeleteDialog } from "@/domains/components/DeleteDialog";
+import { useHeaderActions } from "@/domains/hooks/useHeaderActions";
 
 const ClientList = () => {
   const {

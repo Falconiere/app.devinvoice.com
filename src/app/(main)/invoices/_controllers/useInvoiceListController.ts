@@ -3,10 +3,10 @@ import { parseInvoicePayload } from "@/app/(main)/invoices/_utils/parseInvoicePa
 import { ROUTES } from "@/app/routes";
 import { useToast } from "@/components/ui/use-toast";
 import type { Invoice } from "@/database/services/invoice/types";
-import { useInvoicePaginated } from "@/domains/_queries/invoice/useInvoicePaginated";
-import { useInvoiceSave } from "@/domains/_queries/invoice/useInvoiceSave";
-import { apiRoute } from "@/domains/_utils/apiRoute";
-import { http } from "@/domains/_utils/http";
+import { useInvoicePaginated } from "@/domains/queries/invoice/useInvoicePaginated";
+import { useInvoiceSave } from "@/domains/queries/invoice/useInvoiceSave";
+import { apiRoute } from "@/domains/utils/apiRoute";
+import { http } from "@/domains/utils/http";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 const useInvoiceListController = () => {
@@ -66,6 +66,7 @@ const useInvoiceListController = () => {
 	});
 
 	const onCloseDeleteDialog = () => setIsDeleteDialogOpen(false);
+
 	const onDelete = async () => {
 		if (!selectedId) return;
 		await http.delete(apiRoute.invoices.delete(selectedId));
@@ -73,6 +74,7 @@ const useInvoiceListController = () => {
 		setIsDeleteDialogOpen(false);
 		refetch();
 	};
+
 	return {
 		columns,
 		data,

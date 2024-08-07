@@ -3,7 +3,7 @@ import { InvoiceRowDate } from "@/app/(main)/invoices/_components/InvoiceRowDate
 import { InvoiceStatusBadge } from "@/app/(main)/invoices/_components/InvoiceStatusBadge";
 
 import type { Invoice } from "@/database/services/invoice/types";
-import { toMoney } from "@/domains/_utils/toMoney";
+import { toMoney } from "@/domains/utils/toMoney";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 

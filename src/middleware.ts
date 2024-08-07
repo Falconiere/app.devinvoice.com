@@ -30,6 +30,7 @@ const checkIfAuth = (pathname: string) => {
 		}
 	}
 };
+
 export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
 	const pathname = req.nextUrl.pathname;

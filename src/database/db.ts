@@ -1,5 +1,5 @@
 import { schemas } from "@/database/schemas";
-import { env } from "@/domains/_constants/env";
+import { env } from "@/domains/constants/env";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 

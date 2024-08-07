@@ -6,9 +6,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { Client } from "@/database/services/client/types";
-import { DataTable } from "@/domains/_components/DataTable";
-import { Divider } from "@/domains/_components/Divider";
-import { useClientPaginated } from "@/domains/_queries/client/useClientPaginated";
+import { DataTable } from "@/domains/components/DataTable";
+import { Divider } from "@/domains/components/Divider";
+import { useClientPaginated } from "@/domains/queries/client/useClientPaginated";
 
 type ClientListModalProps = {
   open: boolean;

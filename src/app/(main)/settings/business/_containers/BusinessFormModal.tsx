@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { countryInputOptions } from "@/data/countries";
-import { Divider } from "@/domains/_components/Divider";
+import { Divider } from "@/domains/components/Divider";
 import {
   ComboBoxController,
   InputController,
-} from "@/domains/_components/forms";
+} from "@/domains/components/forms";
 
 type BusinessFormModalProps = {
   open: boolean;

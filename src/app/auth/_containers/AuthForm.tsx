@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { AuthFormFooter } from "../_components/AuthFormFooter";
 
 type AuthFormProps = {
-  type: "login" | "sign-up" | "forgot-password";
+  type: "login" | "register" | "forgot-password";
 };
 
 type AuthData = {
@@ -87,7 +87,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
       </div>
       <Button type="submit" className="w-full">
         {type === "login" && "Login"}
-        {type === "sign-up" && "Signup"}
+        {type === "register" && "Register"}
         {type === "forgot-password" && "Reset Password"}
       </Button>
       <AuthFormFooter type={type} />

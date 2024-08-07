@@ -1,4 +1,4 @@
-import { env } from "@/domains/_constants/env";
+import { env } from "@/domains/constants/env";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 
 type User = {
