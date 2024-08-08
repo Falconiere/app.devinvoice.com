@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const SignUpDialog = () => {
-  const { component, open } = useSignUpDialogCtx();
+  const { component, open, activeStep } = useSignUpDialogCtx();
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Welcome to {"<DevInVoice  />"}</AlertDialogTitle>
-          <StepperBar />
+          <StepperBar activeStep={activeStep} />
         </AlertDialogHeader>
         {component}
       </AlertDialogContent>

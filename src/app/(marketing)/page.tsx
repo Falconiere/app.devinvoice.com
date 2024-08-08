@@ -1,12 +1,13 @@
 import { Section } from "@/app/(marketing)/_components/Section";
 import { Button } from "@/components/ui/button";
 import { TextLogo } from "@/domains/components/TextLogo";
+
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <Section className="items-center justify-center flex flex-col h-[calc(100vh-80px)]">
+      <Section className="items-center justify-center flex flex-col h-[calc(100vh-210px)] text center relative">
         <h1 className="font-black text-7xl">
           Welcome to <TextLogo />
         </h1>
@@ -18,7 +19,7 @@ export default function Home() {
           <Link href="/auth/login">Get Started</Link>
         </Button>
       </Section>
-      {/* <Section className="gap-4">
+      {/* <Section className="gap-4" id="why">
         <div className="grid gap-1 col-span-2">
           <h2 className="font-black text-4xl">Why Choose Us?</h2>
           <p className="text-2xl">

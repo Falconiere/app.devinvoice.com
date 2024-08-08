@@ -84,6 +84,9 @@ const config = {
 				"repeat-same-6": "repeat(6,1fr)",
 				"repeat-same-7": "repeat(7,1fr)",
 			},
+			backgroundImage: {
+				"image-01": "url('/images/bg-image-01.jpg')",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

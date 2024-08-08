@@ -1,5 +1,5 @@
-import { BusinessProfile } from "@/app/auth/_containers/BusinessProfile";
 import { AccountProfile } from "@/app/auth/_containers/AccountProfile";
+import { BusinessProfile } from "@/app/auth/_containers/BusinessProfile";
 
 const signUpSteps = [
   {

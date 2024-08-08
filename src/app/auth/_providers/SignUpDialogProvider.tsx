@@ -1,12 +1,12 @@
 "use client";
 import { signUpSteps } from "@/app/auth/_providers/_utils/signUpSteps";
 import {
+  type ReactNode,
   createContext,
   useContext,
   useEffect,
   useMemo,
   useState,
-  type ReactNode,
 } from "react";
 
 type SignUpDialogProviderData = {
@@ -44,7 +44,7 @@ const SignUpDialogProvider = ({ children }: { children: ReactNode }) => {
       activeStep,
       onNext: () => setActiveStep((prev) => prev + 1),
       onBack: () => setActiveStep((prev) => prev - 1),
-      component: signUpSteps[activeStep].component,
+      component: signUpSteps[activeStep]?.component,
       open: isOpen,
     }),
     [activeStep, isOpen]

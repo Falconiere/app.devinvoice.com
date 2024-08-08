@@ -1,39 +1,31 @@
 import { useBusinessFormController } from "@/app/(main)/settings/business/_controllers/useBusinessFormController";
 import { SignUpDialogFooter } from "@/app/auth/_components/SignUpDialogFooter";
 import { useSignUpDialogCtx } from "@/app/auth/_providers/SignUpDialogProvider";
-import { Input } from "@/components/ui/input";
+import { InputController } from "@/domains/components/forms";
 
 const BusinessProfile = () => {
   const { onBack } = useSignUpDialogCtx();
-  const { onSubmit, register, errors, isPending } = useBusinessFormController();
+  const { onSubmit, form, isPending } = useBusinessFormController();
 
   return (
     <form className="grid gap-4" onSubmit={onSubmit}>
-      <Input
+      <InputController
         label="Organization Name"
-        {...register("name")}
-        error={errors?.name?.message}
+        name="name"
+        control={form.control}
       />
-      <Input
+      <InputController
         label="First Name"
-        {...register("firstName")}
-        error={errors?.firstName?.message}
+        name="firstName"
+        control={form.control}
       />
-      <Input
+      <InputController
         label="Last Name"
-        {...register("lastName")}
-        error={errors?.lastName?.message}
+        name="lastName"
+        control={form.control}
       />
-      <Input
-        label="Email"
-        {...register("email")}
-        error={errors?.email?.message}
-      />
-      <Input
-        label="Website"
-        {...register("website")}
-        error={errors?.website?.message}
-      />
+      <InputController label="Email" name="email" control={form.control} />
+      <InputController label="Website" name="website" control={form.control} />
       <SignUpDialogFooter onBack={onBack} isSubmitting={isPending} />
     </form>
   );

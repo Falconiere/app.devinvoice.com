@@ -19,22 +19,23 @@ type UseBusinessFormController = {
 const useBusinessFormController = (options?: UseBusinessFormController) => {
 	const { onSuccess, onError } = options ?? {};
 	const { refresh } = useRouter();
-	const { data, isLoading, refetch: refetchUser } = useUserProfile();
+	const { data: user, isLoading, refetch: refetchUser } = useUserProfile();
 	const { toast } = useToast();
 
-	const business = data?.businesses?.[0];
+	const business = user?.businesses?.[0];
 	const { mutateAsync, isPending } = useBusinessSave(business?.id);
 	const form = useForm<Business>({
 		defaultValues: business,
-		resolver: zodResolver(businessZodSchema),
+		resolver: zodResolver(
+			businessZodSchema.omit({
+				createdAt: true,
+				updatedAt: true,
+				userId: true,
+			}),
+		),
 	});
 
-	const {
-		handleSubmit,
-		register,
-		setValue,
-		formState: { errors },
-	} = form;
+	const { handleSubmit, setValue } = form;
 
 	useEffect(() => {
 		if (business) {
@@ -47,7 +48,7 @@ const useBusinessFormController = (options?: UseBusinessFormController) => {
 	}, [business, setValue]);
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			await mutateAsync(data);
+			await mutateAsync({ ...data, userId: user?.id ?? "" });
 			toast({
 				title: "Success!",
 				description: "Business details have been saved successfully.",
@@ -69,11 +70,9 @@ const useBusinessFormController = (options?: UseBusinessFormController) => {
 	});
 
 	return {
-		form,
 		onSubmit,
 		isPending: isLoading || isPending,
-		errors,
-		register,
+		form,
 		isLoading,
 	};
 };

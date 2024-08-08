@@ -23,10 +23,12 @@ const AuthForm = ({ type }: AuthFormProps) => {
     formState: { errors },
   } = useForm<AuthData>();
   const [apiError, setApiError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const onSubmit = async (data: AuthData) => {
     try {
       setApiError(null);
+      setIsSubmitting(true);
       const response = await fetch(`/api/auth/${type}`, {
         method: "POST",
         headers: {
@@ -44,6 +46,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
       const { message } = error as AuthApiError;
       setApiError(message || "An error occurred");
     }
+    setIsSubmitting(false);
   };
   return (
     <form
@@ -85,7 +88,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
           })}
         />
       </div>
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
         {type === "login" && "Login"}
         {type === "register" && "Register"}
         {type === "forgot-password" && "Reset Password"}

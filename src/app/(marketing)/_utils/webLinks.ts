@@ -1,7 +1,7 @@
 const webLinks = [
 	{
-		href: "/about",
-		label: "About",
+		href: "/features",
+		label: "Features",
 	},
 	{
 		href: "/invoice-generator",
